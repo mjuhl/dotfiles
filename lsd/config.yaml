@@ -1,0 +1,7 @@
+layout: oneline
+size: short
+sorting:
+  dir-grouping: first
+# hyperlink: auto # cool, but kinda annoying with all the underlines. maybe try changing they styling?
+
+
