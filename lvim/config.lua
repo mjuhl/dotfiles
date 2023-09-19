@@ -4,7 +4,7 @@
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
 vim.opt.expandtab = false
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.relativenumber = false
 
 lvim.colorscheme = "moonlight"
