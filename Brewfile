@@ -1,5 +1,5 @@
-tap "homebrew/cask-versions"
-tap "buo/cask-upgrade" # usage `brew cu` etc...
+#tap "homebrew/cask-versions"
+#tap "buo/cask-upgrade" # usage `brew cu` etc...
 tap "homebrew/cask-fonts"
 tap "oven-sh/bun"
 
@@ -10,10 +10,10 @@ brew "git"
 brew "mas"
 
 # fonts -- https://gist.github.com/davidteren/898f2dcccd42d9f8680ec69a3a5d350e
-cask "font-inter"
+# cask "font-inter"
 cask "font-meslo-lg-nerd-font"
-cask "font-sauce-code-pro-nerd-font"
-cask "font-blex-mono-nerd-font"
+# cask "font-sauce-code-pro-nerd-font"
+# cask "font-blex-mono-nerd-font"
 
 brew "zsh"
 brew "less"
@@ -42,12 +42,14 @@ brew "terminal-notifier"
 brew "hyperfine" # command-line benchmarking tool
 # brew "lima"
 # brew "colima"
-brew "orbstack" # containers and VMs
+# brew "orbstack" # containers and VMs
 # brew "duti" # cli for setting document and url schemes on macos
 # brew "pass" # gpg password manager
+brew "lua@5.1"
+brew "sc-im"
 
 cask "iterm2"
-cask "typora" # nice markdown gui
+# cask "typora" # nice markdown gui
 cask "shottr" # mac screenshot tool
 cask "rapidapi" # like postman but mac native
 cask "alfred"
@@ -66,7 +68,7 @@ cask "appcleaner"
 cask "spotify"
 cask "the-unarchiver"
 cask "slack"
-cask "netnewswire"
+# cask "netnewswire"
 
 # not currently using these:
 # cask "little-snitch"

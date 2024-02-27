@@ -79,6 +79,7 @@ plugins=(
 	node
 	npm
 	nvm
+	zsh-autosuggestions
 	zsh-syntax-highlighting
 )
 
@@ -147,3 +148,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 compctl -g '~/.itermocil/*(:t:r)' itermocil
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

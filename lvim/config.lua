@@ -19,7 +19,8 @@ lvim.colorscheme = "moonlight"
 -------------------------------------------------------------------------------
 lvim.keys.normal_mode["<tab>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-tab>"] = ":BufferLineCyclePrev<CR>"
-
+-- space,g,h opens file in github to current line
+lvim.keys.normal_mode["<Leader>gh"] = ":OpenInGHFileLines<CR>" 
 -- using shift is just so much work
 vim.keymap.set("n", ";", ":", { nowait = true })
 vim.keymap.set("v", ";", ":", { nowait = true })
@@ -29,14 +30,17 @@ vim.keymap.set("v", ";", ":", { nowait = true })
 -------------------------------------------------------------------------------
 -- linters
 -------------------------------------------------------------------------------
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup({
-	{ name = "eslint_d" },
-})
+-- local linters = require "lvim.lsp.null-ls.linters"
+-- linters.setup({
+	-- { name = "eslint_d" },
+-- })
 
 -------------------------------------------------------------------------------
 -- core plugin setups
 -------------------------------------------------------------------------------
+
+-- TODO: configure telescope live grep to be case insensitive
+
 local lsp_manager = require("lvim.lsp.manager")
 -- hide annoying diagnostics, see: https://stackoverflow.com/a/70294761
 lsp_manager.setup("tsserver", {
@@ -66,11 +70,15 @@ lvim.plugins = {
 	},
 
 	-- other plugins
+	{ "dense-analysis/ale" },
   {
     "nmac427/guess-indent.nvim", -- auto detect file indentation and set tabs correctly 
     config = function() require('guess-indent').setup {} end,
     lazy = false,
   },
+	{
+		"almo7aya/openingh.nvim",
+	},
 	{
 		-- used with tsserver to disable annoying diagnostics
 		"jose-elias-alvarez/nvim-lsp-ts-utils"

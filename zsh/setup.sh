@@ -12,5 +12,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 mv $HOME/.zshrc $HOME/.zshrc.bk
 ln -s $CWD/.zshrc $HOME/.zshrc
 
-success "Successfully set up zsh."
+# install plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# TODO: there are probably more that need to be installed?
+
+success "Successfully set up zsh. Remember to reload."
 
