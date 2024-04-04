@@ -122,7 +122,7 @@ alias npmg="npm list -g --depth 0" # show globally installed packages
 alias itc="itermocil"
 
 # quick access to some work stuff
-alias jira="open https://simpleviewtools.atlassian.net/jira/software/c/projects/CMS/boards/36"
+alias jira="open https://simpleviewtools.atlassian.net/jira/software/c/projects/CMS/boards/200/backlog"
 alias slack="open https://app.slack.com/client/TS0KQJ4UW/CRNCE5XL1"
 alias gmail="open https://mail.google.com/mail/u/0/h/1fyndguxeq2il/"
 
