@@ -56,7 +56,7 @@ else
 	brew tap Homebrew/bundle;
 fi
 
-#brew bundle;
+brew bundle;
 brew cleanup;
 # brew doctor;
 success "Finished installing Brewfile packages."
