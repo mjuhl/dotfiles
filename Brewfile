@@ -45,7 +45,7 @@ brew "hyperfine" # command-line benchmarking tool
 # brew "orbstack" # containers and VMs
 # brew "duti" # cli for setting document and url schemes on macos
 # brew "pass" # gpg password manager
-brew "lua@5.1"
+# brew "lua@5.1" # don't remember what this was for but it's been deprecate 
 brew "sc-im"
 
 cask "iterm2"
