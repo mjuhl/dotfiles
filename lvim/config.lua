@@ -43,14 +43,17 @@ vim.keymap.set("v", ";", ":", { nowait = true })
 
 local lsp_manager = require("lvim.lsp.manager")
 -- hide annoying diagnostics, see: https://stackoverflow.com/a/70294761
-lsp_manager.setup("tsserver", {
-  on_attach = function(client, bufnr)
-      require('nvim-lsp-ts-utils').setup({
-          filter_out_diagnostics_by_code = { 80001 },
-      })
-      require('nvim-lsp-ts-utils').setup_client(client)
-  end,
-})
+-- FIXME: this block errors if it's run before everything is installed. it has
+-- to be commented out temporarily, otherwise we get an invalid config error.
+-- figure out how to make it work better.
+-- lsp_manager.setup("tsserver", {
+--   on_attach = function(client, bufnr)
+--       require('nvim-lsp-ts-utils').setup({
+--           filter_out_diagnostics_by_code = { 80001 },
+--       })
+--       require('nvim-lsp-ts-utils').setup_client(client)
+--   end,
+-- })
 
 -------------------------------------------------------------------------------
 -- custom plugins

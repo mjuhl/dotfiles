@@ -10,11 +10,11 @@ CWD=$(pwd)
 
 info "Setting up LunarVim...." 
 
-if ( lvim --version ) < /dev/null > /dev/null 2>&1; then
-	info 'LunarVim is already installed!'
-else
-	LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh) -y
-fi
+#if ( lvim --version ) < /dev/null > /dev/null 2>&1; then
+#	info 'LunarVim is already installed!'
+#else
+#	LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh) -y
+#fi
 
 if ( cat $HOME/.config/lvim/config.lua) < /dev/null > /dev/null 2>&1; then
 	info "lvim config already exists, not overwriting"
