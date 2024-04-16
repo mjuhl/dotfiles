@@ -52,12 +52,14 @@ cask "iterm2"
 # cask "typora" # nice markdown gui
 cask "shottr" # mac screenshot tool
 cask "rapidapi" # like postman but mac native
+case "steermouse"
 cask "alfred"
 cask "caffeine"
 cask "bartender"
 cask "rectangle"
-cask "soundsource"
+# cask "soundsource"
 cask "appcleaner"
+# cask "vagrant" # leaving out as i need a specific version in some cases
 # cask "tiny-player"
 
 # menubar stats apps...not using any of these right now
@@ -68,6 +70,7 @@ cask "appcleaner"
 cask "spotify"
 cask "the-unarchiver"
 cask "slack"
+
 # cask "netnewswire"
 
 # not currently using these:
@@ -82,7 +85,7 @@ mas "StopTheMadness", id: 1376402589
 mas "Numbers", id: 409203825
 mas "Adguard-for-Safari", id: 1440147259
 mas "Wallet", id: 404234608
-mas "Pixelmator-Pro", id: 1289583905
-mas "Oldr", id: 1475048161
-mas "Things-3", id: 904280696
+# mas "Pixelmator-Pro", id: 1289583905
+# mas "Oldr", id: 1475048161
+# mas "Things-3", id: 904280696
 # mas "Display-Menu", id:549083868
