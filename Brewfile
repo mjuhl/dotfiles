@@ -1,7 +1,7 @@
 #tap "homebrew/cask-versions"
 #tap "buo/cask-upgrade" # usage `brew cu` etc...
 tap "homebrew/cask-fonts"
-tap "oven-sh/bun"
+# tap "oven-sh/bun"
 
 brew "coreutils"
 brew "openssl@1.1"
@@ -28,7 +28,7 @@ brew "git-delta" # syntax highlighting pager for git, diff, grep output
 brew "unar"
 brew "nvm"
 # brew "TomAnthony/brews/itermocil" # pre-defined layouts+commands in iterm
-brew "bun"
+brew "oven-sh/bun/bun"
 brew "lsd" # LSDeluxe - like colorls but no messing with ruby
 brew "tree" # lsd does this pretty well, maybe tree isn't needed
 brew "fzy"
