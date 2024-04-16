@@ -52,7 +52,7 @@ cask "iterm2"
 # cask "typora" # nice markdown gui
 cask "shottr" # mac screenshot tool
 cask "rapidapi" # like postman but mac native
-case "steermouse"
+cask "steermouse"
 cask "alfred"
 cask "caffeine"
 cask "bartender"
