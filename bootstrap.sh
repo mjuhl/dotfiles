@@ -61,6 +61,8 @@ brew cleanup;
 # brew doctor;
 success "Finished installing Brewfile packages."
 
+nvm install 18;
+
 python3 -m pip install --upgrade setuptools
 python3 -m pip install --upgrade pip
 

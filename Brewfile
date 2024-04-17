@@ -35,6 +35,7 @@ brew "fzy"
 brew "fd" # find files
 brew "tldr"
 brew "bat" # like cat, but fancy
+brew "wget"
 # brew "the_silver_searcher" # using ripgrep now
 brew "ripgrep"
 brew "httpie" # command-line http client
@@ -53,7 +54,7 @@ cask "iterm2"
 cask "shottr" # mac screenshot tool
 cask "rapidapi" # like postman but mac native
 cask "steermouse"
-cask "alfred"
+# cask "alfred"
 cask "caffeine"
 cask "bartender"
 cask "rectangle"
