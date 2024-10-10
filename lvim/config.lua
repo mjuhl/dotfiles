@@ -30,10 +30,10 @@ vim.keymap.set("v", ";", ":", { nowait = true })
 -------------------------------------------------------------------------------
 -- linters
 -------------------------------------------------------------------------------
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup({
-	-- { name = "eslint_d" },
--- })
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup({
+	{ name = "eslint_d" },
+})
 
 -------------------------------------------------------------------------------
 -- core plugin setups
@@ -46,14 +46,14 @@ local lsp_manager = require("lvim.lsp.manager")
 -- FIXME: this block errors if it's run before everything is installed. it has
 -- to be commented out temporarily, otherwise we get an invalid config error.
 -- figure out how to make it work better.
--- lsp_manager.setup("tsserver", {
---   on_attach = function(client, bufnr)
---       require('nvim-lsp-ts-utils').setup({
---           filter_out_diagnostics_by_code = { 80001 },
---       })
---       require('nvim-lsp-ts-utils').setup_client(client)
---   end,
--- })
+lsp_manager.setup("tsserver", {
+  on_attach = function(client, bufnr)
+      require('nvim-lsp-ts-utils').setup({
+          filter_out_diagnostics_by_code = { 80001 },
+      })
+      require('nvim-lsp-ts-utils').setup_client(client)
+  end,
+})
 
 -------------------------------------------------------------------------------
 -- custom plugins
@@ -116,42 +116,42 @@ lvim.plugins = {
 	},
 
 	-- neorg
-	{
-    "nvim-neorg/neorg",
-    build = ":Neorg sync-parsers",
-    dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-treesitter/nvim-treesitter-textobjects",
-			"nvim-cmp",
-			"nvim-lua/plenary.nvim",
-		},
-    config = function()
-      require("neorg").setup {
-        load = {
-          ["core.defaults"] = {}, -- Loads default behaviour
-					["core.completion"] = { config = { engine = "nvim-cmp", name = "[Norg]" } },
-					["core.integrations.nvim-cmp"] = {},
-					["core.concealer"] = { config = { icon_preset = "diamond" } },
-					["core.export"] = {},
-          ["core.dirman"] = { -- Manages Neorg workspaces
-            config = {
-              workspaces = {
-                home = "~/notes/home",
-                sv = "~/notes/sv",
-              },
-							default_workspace = "sv",
-            },
-          },
-					["core.keybinds"] = {
-						-- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
-						config = {
-							default_keybinds = true,
-							-- neorg_leader = "<Leader><Leader>",
-						},
-					},
-        },
-      }
-    end,
-  },
+-- 	{
+--     "nvim-neorg/neorg",
+--     build = ":Neorg sync-parsers",
+--     dependencies = {
+-- 			"nvim-treesitter/nvim-treesitter",
+-- 			"nvim-treesitter/nvim-treesitter-textobjects",
+-- 			"nvim-cmp",
+-- 			"nvim-lua/plenary.nvim",
+-- 		},
+--     config = function()
+--       require("neorg").setup {
+--         load = {
+--           ["core.defaults"] = {}, -- Loads default behaviour
+-- 					["core.completion"] = { config = { engine = "nvim-cmp", name = "[Norg]" } },
+-- 					["core.integrations.nvim-cmp"] = {},
+-- 					["core.concealer"] = { config = { icon_preset = "diamond" } },
+-- 					["core.export"] = {},
+--           ["core.dirman"] = { -- Manages Neorg workspaces
+--             config = {
+--               workspaces = {
+--                 home = "~/notes/home",
+--                 sv = "~/notes/sv",
+--               },
+-- 							default_workspace = "sv",
+--             },
+--           },
+-- 					["core.keybinds"] = {
+-- 						-- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
+-- 						config = {
+-- 							default_keybinds = true,
+-- 							-- neorg_leader = "<Leader><Leader>",
+-- 						},
+-- 					},
+--         },
+--       }
+--     end,
+--   },
 }
 
