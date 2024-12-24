@@ -6,6 +6,17 @@
 vim.opt.expandtab = false
 vim.opt.wrap = true
 vim.opt.relativenumber = false
+-- vim.opt.colorcolumn = "120"
+-- vim.opt.colorcolumn = "80,120"
+
+-- lvim.builtin.lualine.style = "default"
+
+-------------------------------------------------------------------------------
+-- debug mode:
+-------------------------------------------------------------------------------
+-- require("null-ls").setup({
+-- 	debug = true,
+-- })
 
 lvim.colorscheme = "moonlight"
 -- lvim.colorscheme = "nord"
@@ -32,7 +43,7 @@ vim.keymap.set("v", ";", ":", { nowait = true })
 -------------------------------------------------------------------------------
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup({
-	{ name = "eslint_d" },
+	{ name = "eslint_d", args = { "--no-warn-ignored" } },
 })
 
 -------------------------------------------------------------------------------

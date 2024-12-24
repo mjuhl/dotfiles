@@ -150,3 +150,5 @@ compctl -g '~/.itermocil/*(:t:r)' itermocil
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
