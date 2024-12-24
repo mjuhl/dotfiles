@@ -71,27 +71,27 @@ lsp_manager.setup("tsserver", {
 -------------------------------------------------------------------------------
 lvim.plugins = {
 	-- color schemes, see: https://github.com/rockerBOO/awesome-neovim#colorscheme
-	{ "folke/tokyonight.nvim" },
-	{ "arcticicestudio/nord-vim" },
+	-- { "folke/tokyonight.nvim" },
+	-- { "arcticicestudio/nord-vim" },
 	{ "shaunsingh/moonlight.nvim" },
-	{ "olivercederborg/poimandres.nvim" },
-	{
-		"kyazdani42/blue-moon",
-		config = function()
-			vim.opt.termguicolors = true
-			vim.cmd "colorscheme blue-moon"
-		end
-	},
+	-- { "olivercederborg/poimandres.nvim" },
+	-- {
+	-- 	"kyazdani42/blue-moon",
+	-- 	config = function()
+	-- 		vim.opt.termguicolors = true
+	-- 		vim.cmd "colorscheme blue-moon"
+	-- 	end
+	-- },
 
 	-- other plugins
-	{ "dense-analysis/ale" },
+	{ "dense-analysis/ale" }, -- Asynchronous Lint Engine
   {
     "nmac427/guess-indent.nvim", -- auto detect file indentation and set tabs correctly 
     config = function() require('guess-indent').setup {} end,
     lazy = false,
   },
 	{
-		"almo7aya/openingh.nvim",
+		"almo7aya/openingh.nvim", -- open in github
 	},
 	{
 		-- used with tsserver to disable annoying diagnostics
@@ -121,48 +121,10 @@ lvim.plugins = {
 		end,
 	},
 	{
+		-- Show function signature when you type
 		"ray-x/lsp_signature.nvim",
 		event = "BufRead",
 		config = function() require"lsp_signature".on_attach() end,
 	},
-
-	-- neorg
--- 	{
---     "nvim-neorg/neorg",
---     build = ":Neorg sync-parsers",
---     dependencies = {
--- 			"nvim-treesitter/nvim-treesitter",
--- 			"nvim-treesitter/nvim-treesitter-textobjects",
--- 			"nvim-cmp",
--- 			"nvim-lua/plenary.nvim",
--- 		},
---     config = function()
---       require("neorg").setup {
---         load = {
---           ["core.defaults"] = {}, -- Loads default behaviour
--- 					["core.completion"] = { config = { engine = "nvim-cmp", name = "[Norg]" } },
--- 					["core.integrations.nvim-cmp"] = {},
--- 					["core.concealer"] = { config = { icon_preset = "diamond" } },
--- 					["core.export"] = {},
---           ["core.dirman"] = { -- Manages Neorg workspaces
---             config = {
---               workspaces = {
---                 home = "~/notes/home",
---                 sv = "~/notes/sv",
---               },
--- 							default_workspace = "sv",
---             },
---           },
--- 					["core.keybinds"] = {
--- 						-- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
--- 						config = {
--- 							default_keybinds = true,
--- 							-- neorg_leader = "<Leader><Leader>",
--- 						},
--- 					},
---         },
---       }
---     end,
---   },
 }
 
