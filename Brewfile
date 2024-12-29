@@ -49,6 +49,7 @@ brew "hyperfine" # command-line benchmarking tool
 # brew "sc-im" # Spreadsheet Calculator Improvised
 
 cask "iterm2"
+cask "ghostty"
 cask "shottr" # mac screenshot tool
 cask "rapidapi" # like postman but mac native
 cask "steermouse"
