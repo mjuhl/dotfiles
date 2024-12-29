@@ -30,11 +30,21 @@ brew "nvm" # node version manager
 brew "oven-sh/bun/bun"
 brew "lsd" # LSDeluxe - like colorls but no messing with ruby
 brew "tree" # lsd does this pretty well, maybe tree isn't needed
-brew "fzy"
+brew "yazi" # Blazing fast terminal file manager
+brew "fzy" # fast, simple fuzzy text selector 
+brew "fzf" # general-purpose command-line fuzzy finder
 brew "fd" # find files
 brew "tldr"
 brew "bat" # like cat, but fancy
 brew "wget"
+
+
+brew "jsonlint"
+brew "stylua"
+brew "luacheck"
+brew "eslint"
+brew "eslint_d"
+
 # brew "the_silver_searcher" # using ripgrep now
 brew "ripgrep"
 # brew "httpie" # command-line http client
@@ -76,8 +86,6 @@ cask "the-unarchiver"
 # not currently using these:
 # cask "little-snitch"
 # cask "vmware-fusion"
-# cask "codeedit 
-# cask "nova"
 # cask "maccy" # clipboard manager
 
 # mac app store stuff
@@ -89,4 +97,4 @@ mas "Wallet", id: 404234608
 # mas "Pixelmator-Pro", id: 1289583905
 # mas "Oldr", id: 1475048161
 # mas "Things-3", id: 904280696
-# mas "Display-Menu", id:549083868
+mas "Display-Menu", id:549083868

@@ -50,6 +50,17 @@ linters.setup({
 -- core plugin setups
 -------------------------------------------------------------------------------
 
+-- lvim.builtin.telescope.defaults.layout_config.width = 0.9
+-- lvim.builtin.telescope.defaults.path_display = {
+--   filename_first = {
+--     reverse_directories = true
+--   }
+-- }
+-- lvim.builtin.telescope.theme = "dropdown"
+lvim.builtin.telescope.defaults.path_display = {
+	
+}
+
 -- TODO: configure telescope live grep to be case insensitive
 
 local lsp_manager = require("lvim.lsp.manager")
@@ -120,11 +131,11 @@ lvim.plugins = {
 			})
 		end,
 	},
-	{
-		-- Show function signature when you type
-		"ray-x/lsp_signature.nvim",
-		event = "BufRead",
-		config = function() require"lsp_signature".on_attach() end,
-	},
+	-- {
+	-- 	-- Show function signature when you type
+	-- 	"ray-x/lsp_signature.nvim",
+	-- 	event = "BufRead",
+	-- 	config = function() require"lsp_signature".on_attach() end,
+	-- },
 }
 
