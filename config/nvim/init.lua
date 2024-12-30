@@ -34,7 +34,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -160,6 +160,16 @@ require("lazy").setup({
 					highlights = require("catppuccin.groups.integrations.bufferline").get(),
 					options = {
 						show_buffer_close_icons = false,
+						mode = "tabs",
+						offsets = {
+							{
+								filetype = "neo-tree",
+								-- text = "File Tree",
+								highlight = "Directory",
+								separator = true,
+								text_align = "left",
+							},
+						},
 					},
 				})
 			end,
@@ -167,19 +177,52 @@ require("lazy").setup({
 		{
 			"nvim-lualine/lualine.nvim",
 			config = function()
-				require("lualine").setup({})
+				require("lualine").setup({
+					sections = {
+						lualine_c = {
+							{ "filename", path = 1 },
+						},
+						lualine_x = { "filetype" },
+					},
+				})
+			end,
+		},
+		{
+			"lewis6991/gitsigns.nvim",
+			config = function()
+				require("gitsigns").setup({})
+			end,
+		},
+		{
+			"folke/noice.nvim",
+			event = "VeryLazy",
+			config = function()
+				require("noice").setup({})
 			end,
 		},
 		{
 			"folke/snacks.nvim",
+			dependencies = {
+				{ "echasnovski/mini.icons", version = "*" },
+			},
 			priority = 1000,
 			lazy = false,
 			---@type snacks.Config
 			opts = {
 				dashboard = { enabled = true },
+
 				git = { enabled = true },
 				gitbrowse = { enabled = true },
 				lazygit = { enabled = true },
+
+				indent = {
+					enabled = true,
+					animate = { enabled = false },
+				},
+				input = { enabled = true },
+				notifier = { enabled = true, timeout = 5000 },
+				scope = { enabled = true }, -- use "]" and "[" mappings to jump around based on scope
+				words = { enabled = true },
 			},
 		},
 
@@ -205,7 +248,19 @@ require("lazy").setup({
 				-- setup lang servers installed with mason/mason-lspconfig
 				local lspconfig = require("lspconfig")
 				lspconfig.lua_ls.setup({})
-				lspconfig.ts_ls.setup({})
+				lspconfig.ts_ls.setup({
+					settings = {
+						diagnostics = {
+							-- remove obnoxious and usless suggestions from the typescript language server
+							-- see https://github.com/microsoft/TypeScript/blob/v2.9.1/src/compiler/diagnosticMessages.json
+							ignoredCodes = {
+								80001, -- "File is a CommonJS module; it may be converted to an ES6 module."
+								80002, -- "This constructor function may be converted to a class declaration."
+								80005, -- "'require' call may be converted to an import."
+							},
+						},
+					},
+				})
 			end,
 		},
 		{
@@ -326,6 +381,12 @@ require("lazy").setup({
 -- keybind dependencies
 local telescope_builtin = require("telescope.builtin")
 
+-- Navigate vim panes better
+vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
+vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
+vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
+vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
+
 -- misc
 
 vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { desc = "clear search highlights" })
@@ -352,6 +413,7 @@ vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = "Telesco
 vim.keymap.set("n", "<leader>fd", telescope_builtin.diagnostics, { desc = "Telescope: diagnostics" })
 vim.keymap.set("n", "<leader>fk", telescope_builtin.keymaps, { desc = "Telescope: keymaps" })
 vim.keymap.set("n", "<leader>fl", telescope_builtin.resume, { desc = "Telescope: resume [l]ast" })
+vim.keymap.set("n", "<leader>fm", ":Noice pick<CR>", { desc = "Telescope: [m]essage log" })
 
 -- neo-tree
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Show neo-tree filesystem" })
@@ -361,6 +423,13 @@ vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "[g]o to [d]e
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "[g]o to [r]eferences" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[c]ode [a]ction" })
 vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "run formatter on buffer" })
+
+-- terminal
+vim.keymap.set("n", "<c-/>", function()
+	Snacks.terminal()
+end, { desc = "Toggle terminal" })
+-- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+vim.keymap.set("t", "<c-/>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
