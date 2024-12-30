@@ -62,6 +62,8 @@ success "Successfully set up zsh. Remember to reload."
 . $(brew --prefix nvm)/nvm.sh
 nvm install 22;
 
+corepack enable
+
 npm install -g typescript
 npm install -g eslint_d
 npm install -g nodemon
