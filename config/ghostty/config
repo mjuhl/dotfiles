@@ -2,7 +2,7 @@
 # ghostty +list-themes
 
 # === font ===
-font-family= "Symbols Nerd Font Mono"
+# font-family= "Symbols Nerd Font Mono"
 font-family= "SauceCodePro Nerd Font"
 # font-family= CommitMono Nerd Font
 
