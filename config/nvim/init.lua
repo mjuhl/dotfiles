@@ -350,7 +350,7 @@ local telescope_builtin = require("telescope.builtin")
 
 vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)", { desc = "Toggle comment, current line" })
-vim.keymap.set("n", "<leader>x", ":bd<CR>", { desc = "close buffer" })
+vim.keymap.set("n", "<leader>cb", ":bd<CR>", { desc = "[c]lose [b]uffer" })
 vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
 vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
 
