@@ -152,29 +152,6 @@ require("lazy").setup({
 			end,
 		},
 		{
-			"kdheepak/lazygit.nvim",
-			lazy = true,
-			cmd = {
-				"LazyGit",
-				"LazyGitConfig",
-				"LazyGitCurrentFile",
-				"LazyGitFilter",
-				"LazyGitFilterCurrentFile",
-			},
-			-- optional for floating window border decoration
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-			},
-			-- setting the keybinding for LazyGit with 'keys' is recommended in
-			-- order to load the plugin when the command is run for the first time
-			keys = {
-				{ "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-			},
-		},
-		{
-			"almo7aya/openingh.nvim",
-		},
-		{
 			"akinsho/bufferline.nvim",
 			version = "*",
 			dependencies = "nvim-tree/nvim-web-devicons",
@@ -200,6 +177,9 @@ require("lazy").setup({
 			---@type snacks.Config
 			opts = {
 				dashboard = { enabled = true },
+				git = { enabled = true },
+				gitbrowse = { enabled = true },
+				lazygit = { enabled = true },
 			},
 		},
 
@@ -353,6 +333,11 @@ vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)", { de
 vim.keymap.set("n", "<leader>cb", ":bd<CR>", { desc = "[c]lose [b]uffer" })
 vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
 vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
+
+-- git
+vim.keymap.set("n", "<leader>gg", require("snacks.lazygit").open, { desc = "open lazy git" })
+vim.keymap.set("n", "<leader>gb", require("snacks.git").blame_line, { desc = "open git blame" })
+vim.keymap.set("n", "<leader>gh", require("snacks.gitbrowse").open, { desc = "open in [g]it [h]ub" })
 
 -- using shift is just so much work
 vim.keymap.set("n", ";", ":", { nowait = true })
