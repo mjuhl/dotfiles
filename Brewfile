@@ -12,6 +12,7 @@ brew "mas"
 # fonts -- https://gist.github.com/davidteren/898f2dcccd42d9f8680ec69a3a5d350e
 # cask "font-inter"
 # cask "font-meslo-lg-nerd-font"
+cask "font-symbols-only-nerd-font"
 cask "font-sauce-code-pro-nerd-font"
 # cask "font-blex-mono-nerd-font"
 
@@ -37,6 +38,7 @@ brew "fd" # find files
 brew "tldr"
 brew "bat" # like cat, but fancy
 brew "wget"
+brew "fastfetch"
 
 
 brew "jsonlint"
