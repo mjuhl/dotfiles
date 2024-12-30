@@ -46,3 +46,11 @@ substep_success() {
 substep_error() {
 	coloredEcho "$1" red "===="
 }
+
+preventSudo () {
+	if [ `whoami` == "root" ]; then
+		echo "Do not run as sudo!"
+		exit 1
+	fi
+}
+

@@ -1,11 +1,14 @@
 #! /usr/bin/env bash
 
+# If you get "cannot write domain" or other permission errors, check that terminal or iterm or whatever has "Full Disk Access" in system preferences -> privacy and security
+
 set -e
 
 DIR=$(dirname "$0")
 cd "$DIR"
 
 . ../scripts/functions.sh
+preventSudo
 
 info "Setting macOS defaults..."
 
@@ -307,24 +310,25 @@ defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 
-# Restarting apps:
-info 'Restarting apps...'
-
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 
-for app in "Activity Monitor" \
-	"Calendar" \
-	"cfprefsd" \
-	"Dock" \
-	"Finder" \
-	"Messages" \
-	"Photos" \
-	"Safari" \
-	"SystemUIServer" \
-	"Terminal"; do
-	killall "${app}" &> /dev/null
-done
+## TODO: this is failing and crashing the script, figure out why.
+info 'Note: Not restarting apps, please logout/restart instead'
+
+# for app in "Activity Monitor" \
+# 	"Calendar" \
+# 	"cfprefsd" \
+# 	"Dock" \
+# 	"Finder" \
+# 	"Messages" \
+# 	"Photos" \
+# 	"Safari" \
+# 	"SystemUIServer" \
+# 	"Terminal"; do
+# 	killall "${app}" &> /dev/null
+# done
 
 success "Finished setting macOS defaults. Note that some of these changes require a logout/restart to take effect."
+

@@ -1,0 +1,37 @@
+# ghostty +show-config --default --docs
+# ghostty +list-themes
+
+# === font ===
+font-family= "Symbols Nerd Font Mono"
+font-family= "SauceCodePro Nerd Font"
+# font-family= CommitMono Nerd Font
+
+# To disable programming ligatures, use -calt
+font-feature= -calt
+
+# Font size in points. For example, 13.5pt @ 2px/pt = 27px. Must restart.
+font-size= 12
+
+
+# === look and feel ===
+
+theme= catppuccin-mocha
+# background-opacity = 0.9
+macos-titlebar-style= transparent
+
+# === behavior ===
+#
+# left option key will be treated as "alt", right will be the standard macos "option" e.g. for
+# writing unicode values
+
+macos-option-as-alt= left
+
+desktop-notifications= true
+
+mouse-hide-while-typing= true
+
+# === keybinds ===
+keybind= super+shift+up=scroll_page_lines:-1
+keybind= super+shift+down=scroll_page_lines:1
+#keybind= super+shift+down=scroll_down
+
