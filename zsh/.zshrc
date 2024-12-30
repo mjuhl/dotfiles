@@ -73,9 +73,9 @@ plugins=(
 	aliases
 	bgnotify
 	brew
-	docker
+	# docker
 	git
-	httpie
+	# httpie
 	node
 	npm
 	nvm
@@ -119,16 +119,13 @@ alias ls="lsd -lA" # remap ls to LSDeluxe (and use long opt by default)
 alias gg="lazygit"
 alias reload="source ~/.zshrc && exec /bin/zsh"
 alias npmg="npm list -g --depth 0" # show globally installed packages
-alias itc="itermocil"
-
-# quick access to some work stuff
-alias jira="open https://simpleviewtools.atlassian.net/jira/software/c/projects/CMS/boards/200/backlog"
-alias slack="open https://app.slack.com/client/TS0KQJ4UW/CRNCE5XL1"
-alias gmail="open https://mail.google.com/mail/u/0/h/1fyndguxeq2il/"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 # enable frum (fast ruby version manager)
 eval "$(frum init)"
@@ -146,7 +143,6 @@ export PATH=/Users/mjuhl/.local/bin:$PATH
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-compctl -g '~/.itermocil/*(:t:r)' itermocil
-
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH

@@ -6,6 +6,17 @@
 vim.opt.expandtab = false
 vim.opt.wrap = true
 vim.opt.relativenumber = false
+-- vim.opt.colorcolumn = "120"
+-- vim.opt.colorcolumn = "80,120"
+
+-- lvim.builtin.lualine.style = "default"
+
+-------------------------------------------------------------------------------
+-- debug mode:
+-------------------------------------------------------------------------------
+-- require("null-ls").setup({
+-- 	debug = true,
+-- })
 
 lvim.colorscheme = "moonlight"
 -- lvim.colorscheme = "nord"
@@ -30,14 +41,25 @@ vim.keymap.set("v", ";", ":", { nowait = true })
 -------------------------------------------------------------------------------
 -- linters
 -------------------------------------------------------------------------------
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup({
-	-- { name = "eslint_d" },
--- })
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup({
+	{ name = "eslint_d", args = { "--no-warn-ignored" } },
+})
 
 -------------------------------------------------------------------------------
 -- core plugin setups
 -------------------------------------------------------------------------------
+
+-- lvim.builtin.telescope.defaults.layout_config.width = 0.9
+-- lvim.builtin.telescope.defaults.path_display = {
+--   filename_first = {
+--     reverse_directories = true
+--   }
+-- }
+-- lvim.builtin.telescope.theme = "dropdown"
+lvim.builtin.telescope.defaults.path_display = {
+	
+}
 
 -- TODO: configure telescope live grep to be case insensitive
 
@@ -46,41 +68,41 @@ local lsp_manager = require("lvim.lsp.manager")
 -- FIXME: this block errors if it's run before everything is installed. it has
 -- to be commented out temporarily, otherwise we get an invalid config error.
 -- figure out how to make it work better.
--- lsp_manager.setup("tsserver", {
---   on_attach = function(client, bufnr)
---       require('nvim-lsp-ts-utils').setup({
---           filter_out_diagnostics_by_code = { 80001 },
---       })
---       require('nvim-lsp-ts-utils').setup_client(client)
---   end,
--- })
+lsp_manager.setup("tsserver", {
+  on_attach = function(client, bufnr)
+      require('nvim-lsp-ts-utils').setup({
+          filter_out_diagnostics_by_code = { 80001 },
+      })
+      require('nvim-lsp-ts-utils').setup_client(client)
+  end,
+})
 
 -------------------------------------------------------------------------------
 -- custom plugins
 -------------------------------------------------------------------------------
 lvim.plugins = {
 	-- color schemes, see: https://github.com/rockerBOO/awesome-neovim#colorscheme
-	{ "folke/tokyonight.nvim" },
-	{ "arcticicestudio/nord-vim" },
+	-- { "folke/tokyonight.nvim" },
+	-- { "arcticicestudio/nord-vim" },
 	{ "shaunsingh/moonlight.nvim" },
-	{ "olivercederborg/poimandres.nvim" },
-	{
-		"kyazdani42/blue-moon",
-		config = function()
-			vim.opt.termguicolors = true
-			vim.cmd "colorscheme blue-moon"
-		end
-	},
+	-- { "olivercederborg/poimandres.nvim" },
+	-- {
+	-- 	"kyazdani42/blue-moon",
+	-- 	config = function()
+	-- 		vim.opt.termguicolors = true
+	-- 		vim.cmd "colorscheme blue-moon"
+	-- 	end
+	-- },
 
 	-- other plugins
-	{ "dense-analysis/ale" },
+	{ "dense-analysis/ale" }, -- Asynchronous Lint Engine
   {
     "nmac427/guess-indent.nvim", -- auto detect file indentation and set tabs correctly 
     config = function() require('guess-indent').setup {} end,
     lazy = false,
   },
 	{
-		"almo7aya/openingh.nvim",
+		"almo7aya/openingh.nvim", -- open in github
 	},
 	{
 		-- used with tsserver to disable annoying diagnostics
@@ -109,49 +131,11 @@ lvim.plugins = {
 			})
 		end,
 	},
-	{
-		"ray-x/lsp_signature.nvim",
-		event = "BufRead",
-		config = function() require"lsp_signature".on_attach() end,
-	},
-
-	-- neorg
-	{
-    "nvim-neorg/neorg",
-    build = ":Neorg sync-parsers",
-    dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-treesitter/nvim-treesitter-textobjects",
-			"nvim-cmp",
-			"nvim-lua/plenary.nvim",
-		},
-    config = function()
-      require("neorg").setup {
-        load = {
-          ["core.defaults"] = {}, -- Loads default behaviour
-					["core.completion"] = { config = { engine = "nvim-cmp", name = "[Norg]" } },
-					["core.integrations.nvim-cmp"] = {},
-					["core.concealer"] = { config = { icon_preset = "diamond" } },
-					["core.export"] = {},
-          ["core.dirman"] = { -- Manages Neorg workspaces
-            config = {
-              workspaces = {
-                home = "~/notes/home",
-                sv = "~/notes/sv",
-              },
-							default_workspace = "sv",
-            },
-          },
-					["core.keybinds"] = {
-						-- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
-						config = {
-							default_keybinds = true,
-							-- neorg_leader = "<Leader><Leader>",
-						},
-					},
-        },
-      }
-    end,
-  },
+	-- {
+	-- 	-- Show function signature when you type
+	-- 	"ray-x/lsp_signature.nvim",
+	-- 	event = "BufRead",
+	-- 	config = function() require"lsp_signature".on_attach() end,
+	-- },
 }
 
