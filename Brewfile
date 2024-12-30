@@ -27,7 +27,7 @@ brew "lazygit" # nice git tui, integrates with neovimm
 brew "gh" # github cli
 brew "git-delta" # syntax highlighting pager for git, diff, grep output 
 brew "unar"
-brew "nvm" # node version manager
+brew "nvm" # FIXME: don't install nvm with brew, it causes problems
 brew "oven-sh/bun/bun"
 brew "lsd" # LSDeluxe - like colorls but no messing with ruby
 brew "tree" # lsd does this pretty well, maybe tree isn't needed
