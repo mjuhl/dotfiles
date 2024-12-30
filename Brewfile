@@ -27,6 +27,7 @@ brew "gh" # github cli
 brew "git-delta" # syntax highlighting pager for git, diff, grep output 
 brew "unar"
 brew "nvm"
+# brew "nvm" # do not install nvm via brew, it is problematic
 # brew "TomAnthony/brews/itermocil" # pre-defined layouts+commands in iterm
 brew "oven-sh/bun/bun"
 brew "lsd" # LSDeluxe - like colorls but no messing with ruby
@@ -58,6 +59,8 @@ cask "steermouse"
 cask "caffeine"
 cask "bartender"
 cask "rectangle"
+# cask "rectangle"
+cask "rectangle-pro"
 # cask "soundsource"
 cask "appcleaner"
 # cask "vagrant" # leaving out as i need a specific version in some cases
