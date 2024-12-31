@@ -99,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
-export EDITOR='lvim'
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -113,8 +113,8 @@ export EDITOR='lvim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias zshrc="lvim ~/.zshrc"
-alias ohmyzsh="lvim ~/.oh-my-zsh"
+alias zshrc="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias ls="lsd -lA" # remap ls to LSDeluxe (and use long opt by default)
 alias gg="lazygit"
 alias reload="source ~/.zshrc && exec /bin/zsh"
