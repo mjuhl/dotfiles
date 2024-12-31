@@ -62,6 +62,7 @@ brew "hyperfine" # command-line benchmarking tool
 
 cask "iterm2"
 cask "ghostty"
+cask "karabiner-elements" # keyboard customizer
 cask "shottr" # mac screenshot tool
 cask "rapidapi" # like postman but mac native
 cask "steermouse"
