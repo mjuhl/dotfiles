@@ -160,7 +160,6 @@ require("lazy").setup({
 					highlights = require("catppuccin.groups.integrations.bufferline").get(),
 					options = {
 						show_buffer_close_icons = false,
-						mode = "tabs",
 						offsets = {
 							{
 								filetype = "neo-tree",
