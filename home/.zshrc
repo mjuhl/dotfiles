@@ -72,15 +72,15 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(
 	aliases
 	bgnotify
-	brew
+	# brew
 	# docker
 	git
 	# httpie
-	node
-	npm
-	nvm
+	# node
+	# npm
+	# nvm
 	zsh-autosuggestions
-	zsh-syntax-highlighting
+	# zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -129,8 +129,6 @@ source <(fzf --zsh)
 
 # enable frum (fast ruby version manager)
 eval "$(frum init)"
-
-source ~/.iterm2_shell_integration.zsh
 
 # source /Users/mjuhl/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
