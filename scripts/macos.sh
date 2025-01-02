@@ -37,6 +37,9 @@ defaults write -g AppleActionOnDoubleClick 'Maximize'
 # Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
+# Move windows by holding ctrl+cmd and dragging from anywhere within the window
+defaults write -g NSWindowShouldDragOnGesture -bool true
+
 # Disable press-and-hold for keys instead of key repeat
 # defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
