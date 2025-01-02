@@ -34,7 +34,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -177,7 +177,15 @@ require("lazy").setup({
 			"nvim-lualine/lualine.nvim",
 			config = function()
 				require("lualine").setup({
+					options = {
+						icons_enabled = true,
+						component_separators = "|",
+						section_separators = "",
+					},
 					sections = {
+						-- lualine_a = {
+						-- 	"buffers", -- i dunno about this
+						-- },
 						lualine_c = {
 							{ "filename", path = 1 },
 						},
@@ -375,16 +383,36 @@ require("lazy").setup({
 	checker = { enabled = true },
 })
 
+-- ### AUTO CMD ### --
+
+-- highlight yanked text
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
+
+-- when opening a buffer, return to the previous location
+vim.api.nvim_create_autocmd("BufReadPost", {
+	callback = function()
+		local mark = vim.api.nvim_buf_get_mark(0, '"')
+		local lcount = vim.api.nvim_buf_line_count(0)
+		if mark[1] > 0 and mark[1] <= lcount then
+			pcall(vim.api.nvim_win_set_cursor, 0, mark)
+		end
+	end,
+})
+
 -- ### KEY BINDINGS ### --
 
 -- keybind dependencies
 local telescope_builtin = require("telescope.builtin")
 
 -- Navigate vim panes better
-vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
-vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
-vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
-vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
+vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
+vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
+vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
+vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
 
 -- misc
 
