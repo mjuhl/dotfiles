@@ -461,3 +461,12 @@ vim.keymap.set("t", "<c-/>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
 end)
+
+-- enables background transparency
+vim.cmd([[
+  highlight Normal guibg=none
+  highlight NonText guibg=none
+  highlight Normal ctermbg=none
+  highlight NonText ctermbg=none
+]])
+
