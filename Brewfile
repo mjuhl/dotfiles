@@ -3,6 +3,7 @@
 tap "homebrew/cask-fonts"
 # tap "oven-sh/bun"
 
+
 brew "coreutils"
 brew "openssl@1.1"
 brew "curl"
@@ -59,6 +60,7 @@ brew "hyperfine" # command-line benchmarking tool
 # brew "pass" # gpg password manager
 # brew "lua@5.1" # don't remember what this was for but it's been deprecate 
 # brew "sc-im" # Spreadsheet Calculator Improvised
+brew "tmux"
 
 cask "iterm2"
 cask "ghostty"
@@ -101,3 +103,8 @@ mas "Wallet", id: 404234608
 # mas "Oldr", id: 1475048161
 # mas "Things-3", id: 904280696
 mas "Display-Menu", id:549083868
+
+# JankyBorders
+tap "FelixKratz/formulae"
+brew "borders"
+

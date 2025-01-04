@@ -16,20 +16,18 @@ font-size= 12
 # === look and feel ===
 
 theme= catppuccin-mocha
-# background-opacity = 0.9
+background-opacity = 0.9
+background-blur-radius = 20
 macos-titlebar-style= transparent
 macos-titlebar-proxy-icon = hidden
 
 # === behavior ===
-#
-# left option key will be treated as "alt", right will be the standard macos "option" e.g. for
-# writing unicode values
 
+# left option key will be treated as "alt"
 macos-option-as-alt= left
-
 desktop-notifications= true
-
 mouse-hide-while-typing= true
+shell-integration-features = sudo
 
 # === keybinds ===
 keybind= super+shift+up=scroll_page_lines:-1
