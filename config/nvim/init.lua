@@ -24,6 +24,8 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+
+
 -- ### lazy.nvim ### --
 
 -- Bootstrap lazy.nvim
@@ -176,6 +178,15 @@ require("lazy").setup({
 		{
 			"nvim-lualine/lualine.nvim",
 			config = function()
+				-- display the project root dir name
+				local project_root = {
+					function ()
+						return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+					end,
+					cond = hide_in_width,
+					separator = "»",
+				}
+
 				require("lualine").setup({
 					options = {
 						icons_enabled = true,
@@ -183,10 +194,8 @@ require("lazy").setup({
 						section_separators = "",
 					},
 					sections = {
-						-- lualine_a = {
-						-- 	"buffers", -- i dunno about this
-						-- },
 						lualine_c = {
+							project_root,
 							{ "filename", path = 1 },
 						},
 						lualine_x = { "filetype" },
