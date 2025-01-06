@@ -21,7 +21,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
 # The 'accordion-padding' specifies the size of accordion padding
 # You can set 0 to disable the padding feature
-accordion-padding = 30
+accordion-padding = 200
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
@@ -58,10 +58,10 @@ preset = 'qwerty'
 [gaps]
 inner.horizontal = 40
 inner.vertical =   40
-outer.left =       40
-outer.bottom =     40
-outer.top =        40
-outer.right =      40
+outer.left =       80
+outer.bottom =     80
+outer.top =        80
+outer.right =      80
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -133,8 +133,8 @@ alt-f = 'workspace F'
 alt-g = 'workspace G'
 alt-i = 'workspace I'
 alt-m = 'workspace M' # music, spotify
-alt-n = 'workspace N'
-alt-o = 'workspace O' # outlook, teams
+alt-n = 'workspace N' # notes
+alt-o = 'workspace O' # outlook, teams, email
 alt-p = 'workspace P'
 alt-q = 'workspace Q'
 alt-r = 'workspace R'

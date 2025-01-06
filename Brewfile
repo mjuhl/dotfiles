@@ -40,7 +40,7 @@ brew "bat" # like cat, but fancy
 brew "wget"
 brew "fastfetch"
 
-
+# linters & formatters
 brew "jsonlint"
 brew "stylua"
 brew "luacheck"
@@ -59,7 +59,9 @@ brew "hyperfine" # command-line benchmarking tool
 # brew "pass" # gpg password manager
 # brew "lua@5.1" # don't remember what this was for but it's been deprecate 
 # brew "sc-im" # Spreadsheet Calculator Improvised
+brew "cmatrix" # obvious importance
 
+cask "nikitabobo/tap/aerospace"
 cask "iterm2"
 cask "ghostty"
 cask "karabiner-elements" # keyboard customizer
