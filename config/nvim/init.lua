@@ -70,6 +70,35 @@ require("lazy").setup({
 			end,
 		},
 		{
+			"rachartier/tiny-inline-diagnostic.nvim",
+			-- event = "VeryLazy", -- Or `LspAttach`
+			event = "LspAttach", -- Or `LspAttach`
+			priority = 1000,  -- needs to be loaded in first
+			config = function()
+				vim.diagnostic.config({ virtual_text = false })
+				require("tiny-inline-diagnostic").setup({
+					preset = "simple",
+					options = {
+						-- Show the source of the diagnostic.
+						show_source = true,
+
+						-- If multiple diagnostics are under the cursor, display all of them.
+						multiple_diag_under_cursor = true,
+
+						-- multilines = {
+						-- 	enabled = true,
+						-- 	always_show = false,
+						-- },
+
+						break_line = {
+							enabled = true,
+							after = 80,
+						},
+					},
+				})
+			end,
+		},
+		{
 			"nvim-telescope/telescope-ui-select.nvim",
 			config = function() end,
 		},
