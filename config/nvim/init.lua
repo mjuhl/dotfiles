@@ -276,6 +276,7 @@ require("lazy").setup({
 					enabled = true,
 					animate = { enabled = false },
 				},
+
 				input = { enabled = true },
 				notifier = { enabled = true, timeout = 5000 },
 				scope = { enabled = true }, -- use "]" and "[" mappings to jump around based on scope
@@ -473,11 +474,13 @@ vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
 vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
 vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
 
--- misc
+-- using shift is just so much work
+vim.keymap.set("n", ";", ":", { nowait = true })
+vim.keymap.set("v", ";", ":", { nowait = true })
 
 vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)", { desc = "Toggle comment, current line" })
-vim.keymap.set("n", "<leader>cb", ":bd<CR>", { desc = "[c]lose [b]uffer" })
+vim.keymap.set("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete buffer" }) -- preserves window layout
 vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
 vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
 
@@ -499,14 +502,11 @@ vim.keymap.set("n", "<leader>pl", function() harpoon.ui:toggle_quick_menu(harpoo
 -- vim.keymap.set("n", "<leader><C-t>", function() harpoon:list():replace_at(2) end)
 -- vim.keymap.set("n", "<leader><C-n>", function() harpoon:list():replace_at(3) end)
 -- vim.keymap.set("n", "<leader><C-s>", function() harpoon:list():replace_at(4) end)
+
 -- git
 vim.keymap.set("n", "<leader>gg", require("snacks.lazygit").open, { desc = "open lazy git" })
 vim.keymap.set("n", "<leader>gb", require("snacks.git").blame_line, { desc = "open git blame" })
 vim.keymap.set("n", "<leader>gh", require("snacks.gitbrowse").open, { desc = "open in [g]it [h]ub" })
-
--- using shift is just so much work
-vim.keymap.set("n", ";", ":", { nowait = true })
-vim.keymap.set("v", ";", ":", { nowait = true })
 
 -- telescope
 vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = "Telescope: find files" })
@@ -534,6 +534,9 @@ vim.keymap.set("n", "<c-/>", function()
 end, { desc = "Toggle terminal" })
 -- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("t", "<c-/>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+
+-- ### MISC ### --
 
 vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
