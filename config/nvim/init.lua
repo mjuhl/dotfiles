@@ -99,6 +99,11 @@ require("lazy").setup({
 			end,
 		},
 		{
+			"ThePrimeagen/harpoon",
+			branch = "harpoon2",
+			dependencies = { "nvim-lua/plenary.nvim" },
+		},
+		{
 			"nvim-telescope/telescope-ui-select.nvim",
 			config = function() end,
 		},
@@ -460,6 +465,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- keybind dependencies
 local telescope_builtin = require("telescope.builtin")
+local harpoon = require("harpoon")
 
 -- Navigate vim panes better
 vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
@@ -475,6 +481,24 @@ vim.keymap.set("n", "<leader>cb", ":bd<CR>", { desc = "[c]lose [b]uffer" })
 vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
 vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
 
+-- harpoon
+vim.keymap.set("n", "<leader>pA", function() harpoon:list():prepend() end, { desc = "Harpoon: prepend"})
+vim.keymap.set("n", "<leader>pa", function() harpoon:list():add() end, { desc = "Harpoon: add"})
+vim.keymap.set("n", "<leader>pC", function()
+	harpoon:list():clear()
+	vim.notify("Harpoon list cleared")
+end, { desc = "Harpoon: clear list"})
+vim.keymap.set("n", "<leader>pc", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon: show list" })
+vim.keymap.set("n", "<leader>pl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon: show list" })
+
+-- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+-- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+-- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+-- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+-- vim.keymap.set("n", "<leader><C-h>", function() harpoon:list():replace_at(1) end)
+-- vim.keymap.set("n", "<leader><C-t>", function() harpoon:list():replace_at(2) end)
+-- vim.keymap.set("n", "<leader><C-n>", function() harpoon:list():replace_at(3) end)
+-- vim.keymap.set("n", "<leader><C-s>", function() harpoon:list():replace_at(4) end)
 -- git
 vim.keymap.set("n", "<leader>gg", require("snacks.lazygit").open, { desc = "open lazy git" })
 vim.keymap.set("n", "<leader>gb", require("snacks.git").blame_line, { desc = "open git blame" })
