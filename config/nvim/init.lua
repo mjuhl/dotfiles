@@ -7,6 +7,7 @@ vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.cursorline = true
+vim.opt.signcolumn = "yes" -- always display to prevent shifting
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -24,8 +25,6 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-
-
 -- ### lazy.nvim ### --
 
 -- Bootstrap lazy.nvim
@@ -36,7 +35,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -180,7 +179,7 @@ require("lazy").setup({
 			config = function()
 				-- display the project root dir name
 				local project_root = {
-					function ()
+					function()
 						return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
 					end,
 					cond = hide_in_width,
@@ -206,7 +205,15 @@ require("lazy").setup({
 		{
 			"lewis6991/gitsigns.nvim",
 			config = function()
-				require("gitsigns").setup({})
+				require("gitsigns").setup({
+					signs = {
+						add = { text = "+" },
+						change = { text = "~" },
+						delete = { text = "_" },
+						topdelete = { text = "‾" },
+						changedelete = { text = "~" },
+					},
+				})
 			end,
 		},
 		{
@@ -305,6 +312,14 @@ require("lazy").setup({
 					ensure_installed = nil,
 					automatic_installation = true,
 				})
+			end,
+		},
+
+		{
+			"echasnovski/mini.pairs",
+			version = false,
+			config = function()
+				require("mini.pairs").setup()
 			end,
 		},
 
@@ -478,4 +493,3 @@ vim.cmd([[
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none
 ]])
-
