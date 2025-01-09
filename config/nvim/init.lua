@@ -4,10 +4,13 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = false
 vim.opt.wrap = false
+vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes" -- always display to prevent shifting
+vim.opt.undofile = true -- save undo history
+
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -122,14 +125,19 @@ require("lazy").setup({
 			dependencies = { "nvim-lua/plenary.nvim" },
 		},
 		{
-			"nvim-telescope/telescope-ui-select.nvim",
-			config = function() end,
-		},
-		{
 			"nvim-telescope/telescope.nvim",
 			tag = "0.1.8",
 			dependencies = {
-				"nvim-lua/plenary.nvim",
+				{ "nvim-lua/plenary.nvim" },
+				{
+					"nvim-telescope/telescope-fzf-native.nvim",
+					build = "make",
+					cond = function()
+						return vim.fn.executable "make" == 1
+					end,
+				},
+				{ "nvim-telescope/telescope-ui-select.nvim" },
+				{ "nvim-tree/nvim-web-devicons" },
 			},
 			config = function()
 				local telescope = require("telescope")
@@ -149,6 +157,7 @@ require("lazy").setup({
 				})
 
 				telescope.load_extension("ui-select")
+				telescope.load_extension("fzf")
 			end,
 		},
 		{
@@ -499,42 +508,48 @@ local harpoon = require("harpoon")
 vim.keymap.set("n", ";", ":", { nowait = true })
 vim.keymap.set("v", ";", ":", { nowait = true })
 
-vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { desc = "clear search highlights" })
-vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)", { desc = "Toggle comment, current line" })
+-- Esc clears search highlight in normal mode
+vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { desc = "clear search highlights" })
 
+-- toggle line comment
+vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)", { desc = "Toggle comment, current line" })
+vim.keymap.set("v", "<leader>/", "<Plug>(comment_toggle_linewise_visual)", { desc = "Toggle comment, current line" })
+
+-- close a buffer while preserving window layout
 vim.keymap.set("n", "<leader>bd", function()
 	Snacks.bufdelete()
-end, { desc = "Delete buffer" }) -- preserves window layout
+end, { desc = "Delete buffer" })
 
+-- switch open buffers using tab key
 vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
 vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
 
 -- harpoon
-vim.keymap.set("n", "<leader>pA", function()
+vim.keymap.set("n", "<leader>hA", function()
 	harpoon:list():prepend()
 end, { desc = "Harpoon: prepend" })
 
-vim.keymap.set("n", "<leader>pa", function()
+vim.keymap.set("n", "<leader>ha", function()
 	harpoon:list():add()
 end, { desc = "Harpoon: add" })
 
-vim.keymap.set("n", "<leader>pC", function()
+vim.keymap.set("n", "<leader>hC", function()
 	harpoon:list():clear()
 	vim.notify("Harpoon list cleared")
 end, { desc = "Harpoon: clear list" })
 
-vim.keymap.set("n", "<leader>pc", function()
+vim.keymap.set("n", "<leader>hc", function()
 	harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = "Harpoon: show list" })
 
-vim.keymap.set("n", "<leader>pl", function()
+vim.keymap.set("n", "<leader>hl", function()
 	harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = "Harpoon: show list" })
 
--- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
--- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
--- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
--- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end, { desc = "Harpoon: file position 1"})
+vim.keymap.set("n", "<leader>h2", function() harpoon:list():select(2) end, { desc = "Harpoon: file position 2"})
+vim.keymap.set("n", "<leader>h3", function() harpoon:list():select(3) end, { desc = "Harpoon: file position 3"})
+vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end, { desc = "Harpoon: file position 4"})
 -- vim.keymap.set("n", "<leader><C-h>", function() harpoon:list():replace_at(1) end)
 -- vim.keymap.set("n", "<leader><C-t>", function() harpoon:list():replace_at(2) end)
 -- vim.keymap.set("n", "<leader><C-n>", function() harpoon:list():replace_at(3) end)
@@ -546,15 +561,16 @@ vim.keymap.set("n", "<leader>gb", require("snacks.git").blame_line, { desc = "op
 vim.keymap.set("n", "<leader>gh", require("snacks.gitbrowse").open, { desc = "open in [g]it [h]ub" })
 
 -- telescope
-vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = "Telescope: find files" })
-vim.keymap.set("n", "<leader>fg", telescope_builtin.live_grep, { desc = "Telescope: live grep" })
-vim.keymap.set("n", "<leader>fr", telescope_builtin.oldfiles, { desc = "Telescope: recent files" })
-vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Telescope: buffers" })
-vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = "Telescope: help tags" })
-vim.keymap.set("n", "<leader>fd", telescope_builtin.diagnostics, { desc = "Telescope: diagnostics" })
-vim.keymap.set("n", "<leader>fk", telescope_builtin.keymaps, { desc = "Telescope: keymaps" })
-vim.keymap.set("n", "<leader>fl", telescope_builtin.resume, { desc = "Telescope: resume [l]ast" })
-vim.keymap.set("n", "<leader>fm", ":Noice pick<CR>", { desc = "Telescope: [m]essage log" })
+vim.keymap.set("n", "<leader>sf", telescope_builtin.find_files, { desc = "[s]earch [f]iles" })
+vim.keymap.set("n", "<leader>sg", telescope_builtin.live_grep, { desc = "[s]earch by [g]rep" })
+vim.keymap.set("n", "<leader>sw", telescope_builtin.grep_string, { desc = "[s]earch for current [w]ord" })
+vim.keymap.set("n", "<leader>sr", telescope_builtin.oldfiles, { desc = "[s]earch for [r]ecent files" })
+vim.keymap.set("n", "<leader>so", telescope_builtin.buffers, { desc = "[s]earch [o]pen buffers" })
+vim.keymap.set("n", "<leader>sh", telescope_builtin.help_tags, { desc = "[s]earch [h]elp" })
+vim.keymap.set("n", "<leader>sd", telescope_builtin.diagnostics, { desc = "[s]earch [d]iagnostics" })
+vim.keymap.set("n", "<leader>sk", telescope_builtin.keymaps, { desc = "[s]earch [k]eymaps" })
+vim.keymap.set("n", "<leader>sl", telescope_builtin.resume, { desc = "[s]earch: resume [l]ast" })
+vim.keymap.set("n", "<leader>sm", ":Noice pick<CR>", { desc = "[s]earch editor [m]essages" })
 
 -- neo-tree
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Show neo-tree filesystem" })
@@ -563,9 +579,16 @@ vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Show neo-tree 
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "[g]o to [d]efinition" })
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "[g]o to [r]eferences" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[c]ode [a]ction" })
-vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "run formatter on buffer" })
+vim.keymap.set("n", "<leader>fb", vim.lsp.buf.format, { desc = "[f]ormat [b]uffer" })
+vim.keymap.set("v", "<leader>fs", function()
+	vim.lsp.buf.format({
+		range = { ["start"] = vim.api.nvim_buf_get_mark(0, "<"), ["end"] = vim.api.nvim_buf_get_mark(0, ">") },
+	})
+end, { desc = "[f]ormat [s]election" })
+
 
 -- terminal
+-- FIXME: this is not working in tmux
 vim.keymap.set("n", "<c-/>", function()
 	Snacks.terminal()
 end, { desc = "Toggle terminal" })
