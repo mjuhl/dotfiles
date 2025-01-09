@@ -124,7 +124,8 @@ alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-1 = 'workspace 1'
+# 1-9 generic multi-app workspaces
+alt-1 = 'workspace 1' 
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
@@ -134,21 +135,22 @@ alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 # In your config, you can drop workspace bindings that you don't need
+# a-z typical context-specific workspaces
 alt-a = 'workspace A'
 alt-b = 'workspace B' # browser
 alt-c = 'workspace C'
-alt-d = 'workspace D'
-alt-e = 'workspace E'
+alt-d = 'workspace D' # DAW
+alt-e = 'workspace E' # email, outlook, teams
 alt-f = 'workspace F'
 alt-g = 'workspace G'
 alt-i = 'workspace I'
 alt-m = 'workspace M' # music, spotify
 alt-n = 'workspace N' # notes
-alt-o = 'workspace O' # outlook, teams, email
+alt-o = 'workspace O'
 alt-p = 'workspace P'
 alt-q = 'workspace Q'
-alt-r = 'workspace R'
-alt-s = 'workspace S'
+alt-r = 'workspace R' # jira
+alt-s = 'workspace S' # spreadsheet
 alt-t = 'workspace T' # terminal
 alt-u = 'workspace U'
 alt-v = 'workspace V'
