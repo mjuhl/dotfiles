@@ -59,6 +59,24 @@ require("lazy").setup({
 			"folke/which-key.nvim",
 		},
 		{
+			"christoomey/vim-tmux-navigator",
+			cmd = {
+				"TmuxNavigateLeft",
+				"TmuxNavigateDown",
+				"TmuxNavigateUp",
+				"TmuxNavigateRight",
+				"TmuxNavigatePrevious",
+				"TmuxNavigatorProcessList",
+			},
+			keys = {
+				{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+				{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+				{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+				{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+				{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+			},
+		},
+		{
 			-- when using :46 (e.g.) temporarily jumps to line 46, but back on <Esc>
 			"nacro90/numb.nvim",
 			event = "BufRead",
@@ -73,7 +91,7 @@ require("lazy").setup({
 			"rachartier/tiny-inline-diagnostic.nvim",
 			-- event = "VeryLazy", -- Or `LspAttach`
 			event = "LspAttach", -- Or `LspAttach`
-			priority = 1000,  -- needs to be loaded in first
+			priority = 1000, -- needs to be loaded in first
 			config = function()
 				vim.diagnostic.config({ virtual_text = false })
 				require("tiny-inline-diagnostic").setup({
@@ -472,10 +490,10 @@ local telescope_builtin = require("telescope.builtin")
 local harpoon = require("harpoon")
 
 -- Navigate vim panes better
-vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
-vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
-vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
-vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
+-- vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
+-- vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
+-- vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
+-- vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
 
 -- using shift is just so much work
 vim.keymap.set("n", ";", ":", { nowait = true })
@@ -483,19 +501,35 @@ vim.keymap.set("v", ";", ":", { nowait = true })
 
 vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)", { desc = "Toggle comment, current line" })
-vim.keymap.set("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete buffer" }) -- preserves window layout
+
+vim.keymap.set("n", "<leader>bd", function()
+	Snacks.bufdelete()
+end, { desc = "Delete buffer" }) -- preserves window layout
+
 vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
 vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
 
 -- harpoon
-vim.keymap.set("n", "<leader>pA", function() harpoon:list():prepend() end, { desc = "Harpoon: prepend"})
-vim.keymap.set("n", "<leader>pa", function() harpoon:list():add() end, { desc = "Harpoon: add"})
+vim.keymap.set("n", "<leader>pA", function()
+	harpoon:list():prepend()
+end, { desc = "Harpoon: prepend" })
+
+vim.keymap.set("n", "<leader>pa", function()
+	harpoon:list():add()
+end, { desc = "Harpoon: add" })
+
 vim.keymap.set("n", "<leader>pC", function()
 	harpoon:list():clear()
 	vim.notify("Harpoon list cleared")
-end, { desc = "Harpoon: clear list"})
-vim.keymap.set("n", "<leader>pc", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon: show list" })
-vim.keymap.set("n", "<leader>pl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon: show list" })
+end, { desc = "Harpoon: clear list" })
+
+vim.keymap.set("n", "<leader>pc", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = "Harpoon: show list" })
+
+vim.keymap.set("n", "<leader>pl", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = "Harpoon: show list" })
 
 -- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
 -- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
@@ -537,7 +571,6 @@ vim.keymap.set("n", "<c-/>", function()
 end, { desc = "Toggle terminal" })
 -- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("t", "<c-/>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-
 
 -- ### MISC ### --
 
