@@ -203,27 +203,27 @@ require("lazy").setup({
 			},
 			opts = { signs = false },
 		},
-		{
-			"nvim-neo-tree/neo-tree.nvim",
-			branch = "v3.x",
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-				"MunifTanjim/nui.nvim",
-				-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-			},
-			config = function()
-				require("neo-tree").setup({
-					filesystem = {
-						filtered_items = {
-							visible = true,
-							hide_dotfiles = false,
-							hide_gitignored = true,
-						},
-					},
-				})
-			end,
-		},
+		-- {
+		-- 	"nvim-neo-tree/neo-tree.nvim",
+		-- 	branch = "v3.x",
+		-- 	dependencies = {
+		-- 		"nvim-lua/plenary.nvim",
+		-- 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+		-- 		"MunifTanjim/nui.nvim",
+		-- 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		-- 	},
+		-- 	config = function()
+		-- 		require("neo-tree").setup({
+		-- 			filesystem = {
+		-- 				filtered_items = {
+		-- 					visible = true,
+		-- 					hide_dotfiles = false,
+		-- 					hide_gitignored = true,
+		-- 				},
+		-- 			},
+		-- 		})
+		-- 	end,
+		-- },
 		{
 			"akinsho/bufferline.nvim",
 			version = "*",
@@ -233,15 +233,15 @@ require("lazy").setup({
 					highlights = require("catppuccin.groups.integrations.bufferline").get(),
 					options = {
 						show_buffer_close_icons = false,
-						offsets = {
-							{
-								filetype = "neo-tree",
-								-- text = "File Tree",
-								highlight = "Directory",
-								separator = true,
-								text_align = "left",
-							},
-						},
+						-- offsets = {
+						-- 	{
+						-- 		filetype = "neo-tree",
+						-- 		-- text = "File Tree",
+						-- 		highlight = "Directory",
+						-- 		separator = true,
+						-- 		text_align = "left",
+						-- 	},
+						-- },
 					},
 				})
 			end,
@@ -305,6 +305,8 @@ require("lazy").setup({
 			---@type snacks.Config
 			opts = {
 				dashboard = { enabled = true },
+
+				explorer = {},
 
 				git = { enabled = true },
 				gitbrowse = { enabled = true },
@@ -517,6 +519,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 -- keybind dependencies
 local telescope_builtin = require("telescope.builtin")
 local harpoon = require("harpoon")
+local Snacks = require("snacks")
 
 -- Navigate vim panes better
 -- vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
@@ -592,8 +595,8 @@ vim.keymap.set("n", "<leader>sk", telescope_builtin.keymaps, { desc = "[s]earch 
 vim.keymap.set("n", "<leader>sl", telescope_builtin.resume, { desc = "[s]earch: resume [l]ast" })
 vim.keymap.set("n", "<leader>sm", ":Noice pick<CR>", { desc = "[s]earch editor [m]essages" })
 
--- neo-tree
-vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Show neo-tree filesystem" })
+-- neo-tree/snacks explorer
+vim.keymap.set("n", "<leader>e", Snacks.explorer.open, { desc = "Show file explorer" })
 
 -- lsp
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "[g]o to [d]efinition" })
