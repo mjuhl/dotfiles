@@ -162,6 +162,11 @@ require("lazy").setup({
 							require("telescope.themes").get_dropdown({}),
 						},
 					},
+					pickers = {
+						find_files = {
+							hidden = true,
+						},
+					},
 				})
 
 				telescope.load_extension("ui-select")
@@ -596,7 +601,7 @@ vim.keymap.set("n", "<leader>sl", telescope_builtin.resume, { desc = "[s]earch: 
 vim.keymap.set("n", "<leader>sm", ":Noice pick<CR>", { desc = "[s]earch editor [m]essages" })
 
 -- neo-tree/snacks explorer
-vim.keymap.set("n", "<leader>e", Snacks.explorer.open, { desc = "Show file explorer" })
+vim.keymap.set("n", "<leader>e", function () Snacks.explorer.open({hidden=true}) end, { desc = "Show file explorer" })
 
 -- lsp
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "[g]o to [d]efinition" })
