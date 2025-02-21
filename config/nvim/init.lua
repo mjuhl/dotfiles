@@ -50,12 +50,28 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
+		-- COLOR SCHEMES
+		-- {
+		-- 	"catppuccin/nvim",
+		-- 	name = "catppuccin",
+		-- 	priority = 1000,
+		-- 	config = function()
+		-- 		vim.cmd.colorscheme("catppuccin-mocha")
+		-- 	end,
+		-- },
 		{
-			"catppuccin/nvim",
-			name = "catppuccin",
-			priority = 1000,
+			"datsfilipe/vesper.nvim",
 			config = function()
-				vim.cmd.colorscheme("catppuccin-mocha")
+				require("vesper").setup({
+					transparent = true,italics = {
+						comments = false, -- Boolean: Italicizes comments
+						keywords = false, -- Boolean: Italicizes keywords
+						functions = false, -- Boolean: Italicizes functions
+						strings = false, -- Boolean: Italicizes strings
+						variables = false, -- Boolean: Italicizes variables
+					},
+				})
+				vim.cmd.colorscheme("vesper")
 			end,
 		},
 		{
@@ -238,7 +254,8 @@ require("lazy").setup({
 			dependencies = "nvim-tree/nvim-web-devicons",
 			config = function()
 				require("bufferline").setup({
-					highlights = require("catppuccin.groups.integrations.bufferline").get(),
+					-- highlights = require("catppuccin.groups.integrations.bufferline").get(),
+					highlights = require("vesper").bufferline.highlights,
 					options = {
 						show_buffer_close_icons = false,
 						-- offsets = {
@@ -497,7 +514,8 @@ require("lazy").setup({
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "catppuccin" } },
+	-- install = { colorscheme = { "catppuccin" } },
+	install = { colorscheme = { "vesper" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
 })

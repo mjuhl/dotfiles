@@ -15,12 +15,16 @@ font-size= 12
 
 # === look and feel ===
 
-theme= catppuccin-mocha
+# theme= catppuccin-mocha
+theme= vesper
 background-opacity = 0.95
 background-blur-radius = 20
 # macos-titlebar-style= transparent
 macos-titlebar-style= hidden
 macos-titlebar-proxy-icon = hidden
+
+window-padding-x = 8
+window-padding-y = 8
 
 # === behavior ===
 
