@@ -11,6 +11,7 @@ vim.opt.cursorline = true
 vim.opt.signcolumn = "yes" -- always display to prevent shifting
 vim.opt.undofile = true -- save undo history
 
+vim.opt.termguicolors = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -50,7 +51,8 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
-		-- COLOR SCHEMES
+		-- COLOR SCHEMES --
+		-------------------
 		-- {
 		-- 	"catppuccin/nvim",
 		-- 	name = "catppuccin",
@@ -59,19 +61,30 @@ require("lazy").setup({
 		-- 		vim.cmd.colorscheme("catppuccin-mocha")
 		-- 	end,
 		-- },
+		-- {
+		-- 	"datsfilipe/vesper.nvim",
+		-- 	config = function()
+		-- 		require("vesper").setup({
+		-- 			transparent = true,
+		-- 			italics = {
+		-- 				comments = false, -- Boolean: Italicizes comments
+		-- 				keywords = false, -- Boolean: Italicizes keywords
+		-- 				functions = false, -- Boolean: Italicizes functions
+		-- 				strings = false, -- Boolean: Italicizes strings
+		-- 				variables = false, -- Boolean: Italicizes variables
+		-- 			},
+		-- 		})
+		-- 		vim.cmd.colorscheme("vesper")
+		-- 	end,
+		-- },
 		{
-			"datsfilipe/vesper.nvim",
+			"rebelot/kanagawa.nvim",
 			config = function()
-				require("vesper").setup({
-					transparent = true,italics = {
-						comments = false, -- Boolean: Italicizes comments
-						keywords = false, -- Boolean: Italicizes keywords
-						functions = false, -- Boolean: Italicizes functions
-						strings = false, -- Boolean: Italicizes strings
-						variables = false, -- Boolean: Italicizes variables
-					},
+				require("kanagawa").setup({
+					theme = "dragon",
+					transparent = true,
 				})
-				vim.cmd.colorscheme("vesper")
+				vim.cmd("colorscheme kanagawa-dragon")
 			end,
 		},
 		{
@@ -251,13 +264,33 @@ require("lazy").setup({
 		{
 			"akinsho/bufferline.nvim",
 			version = "*",
-			dependencies = "nvim-tree/nvim-web-devicons",
+			-- dependencies = "nvim-tree/nvim-web-devicons",
 			config = function()
-				require("bufferline").setup({
+				local bufferline = require("bufferline")
+				bufferline.setup({
 					-- highlights = require("catppuccin.groups.integrations.bufferline").get(),
-					highlights = require("vesper").bufferline.highlights,
+					-- highlights = require("vesper").bufferline.highlights,
+					-- TODO: anything required for highlights from kanagawa theme?
+					highlights = {
+						fill = {
+							bg = {
+								attribute = "background",
+								highlight = "Pmenu",
+							}
+						},
+					},
 					options = {
+						style_preset = {
+							bufferline.style_preset.minimal,
+							bufferline.style_preset.no_bold,
+						},
+						max_name_length = 24, -- default 18
+						tab_size = 24, -- default 18
+						color_icons = false, -- whether or not to add the filetype icon highlights
+						show_buffer_icons = false,
 						show_buffer_close_icons = false,
+						separator_style = {" "," "},
+
 						-- offsets = {
 						-- 	{
 						-- 		filetype = "neo-tree",
@@ -570,8 +603,10 @@ vim.keymap.set("n", "<leader>bd", function()
 end, { desc = "Delete buffer" })
 
 -- switch open buffers using tab key
-vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
-vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
+-- vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
+-- vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
+vim.keymap.set("n", "<tab>", "<cmd>bnext<CR>", { desc = "next buffer" })
+vim.keymap.set("n", "<s-tab>", "<cmd>bprev<CR>", { desc = "previous buffer" })
 
 -- harpoon
 vim.keymap.set("n", "<leader>hA", function()

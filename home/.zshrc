@@ -119,6 +119,7 @@ alias ls="lsd -lA" # remap ls to LSDeluxe (and use long opt by default)
 alias gg="lazygit"
 alias reload="source ~/.zshrc && exec /bin/zsh"
 alias npmg="npm list -g --depth 0" # show globally installed packages
+alias trs="tmux rename-session"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
