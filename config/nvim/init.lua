@@ -77,15 +77,19 @@ require("lazy").setup({
 		-- 		vim.cmd.colorscheme("vesper")
 		-- 	end,
 		-- },
+		-- {
+		-- 	"rebelot/kanagawa.nvim",
+		-- 	config = function()
+		-- 		require("kanagawa").setup({
+		-- 			theme = "dragon",
+		-- 			transparent = true,
+		-- 		})
+		-- 		vim.cmd("colorscheme kanagawa-dragon")
+		-- 	end,
+		-- },
 		{
-			"rebelot/kanagawa.nvim",
-			config = function()
-				require("kanagawa").setup({
-					theme = "dragon",
-					transparent = true,
-				})
-				vim.cmd("colorscheme kanagawa-dragon")
-			end,
+			"Koalhack/darcubox-nvim",
+			config = function() vim.cmd("colorscheme darcubox") end
 		},
 		{
 			"folke/which-key.nvim",
@@ -163,6 +167,7 @@ require("lazy").setup({
 		},
 		{
 			"nvim-telescope/telescope.nvim",
+			-- make sure to install ripgrep and (optionally) fd
 			tag = "0.1.8",
 			dependencies = {
 				{ "nvim-lua/plenary.nvim" },
@@ -548,7 +553,7 @@ require("lazy").setup({
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
 	-- install = { colorscheme = { "catppuccin" } },
-	install = { colorscheme = { "vesper" } },
+	-- install = { colorscheme = { "vesper" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
 })
