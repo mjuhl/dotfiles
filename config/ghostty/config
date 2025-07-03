@@ -17,7 +17,8 @@ font-size= 12
 
 # theme= catppuccin-mocha
 # theme= vesper
-theme= "Kanagawa Dragon"
+# theme= "Kanagawa Dragon"
+theme= "darcubox"
 background-opacity = 0.95
 background-blur-radius = 20
 # macos-titlebar-style= transparent
