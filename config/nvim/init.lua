@@ -24,7 +24,7 @@ vim.opt.inccommand = "split"
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "⇀ ", trail = "·", nbsp = "␣", space = "·" }
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -154,7 +154,7 @@ require("lazy").setup({
 
 						break_line = {
 							enabled = true,
-							after = 80,
+							after = 40,
 						},
 					},
 				})
