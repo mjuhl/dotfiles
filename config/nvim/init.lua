@@ -29,12 +29,13 @@ vim.opt.listchars = { tab = "⇀ ", trail = "·", nbsp = "␣", space = "·" }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-
 -- disable unused providers (silences healthcheck noise)
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
+
+vim.lsp.inlay_hint.enable()
 
 -- ### lazy.nvim ### --
 
@@ -505,6 +506,26 @@ require("lazy").setup({
 								80001, -- "File is a CommonJS module; it may be converted to an ES6 module."
 								80002, -- "This constructor function may be converted to a class declaration."
 								80005, -- "'require' call may be converted to an import."
+							},
+						},
+						typescript = {
+							inlayHints = {
+								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayVariableTypeHints = false,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
+							},
+						},
+						javascript = {
+							inlayHints = {
+								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayVariableTypeHints = false,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
 							},
 						},
 					},
