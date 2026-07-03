@@ -9,7 +9,7 @@ vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes" -- always display to prevent shifting
-vim.opt.undofile = true -- save undo history
+vim.opt.undofile = true    -- save undo history
 
 vim.opt.termguicolors = true
 
@@ -46,7 +46,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -133,10 +133,10 @@ require("lazy").setup({
 				"TmuxNavigatorProcessList",
 			},
 			keys = {
-				{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-				{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-				{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-				{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+				{ "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+				{ "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+				{ "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+				{ "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
 				{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
 			},
 		},
@@ -155,7 +155,7 @@ require("lazy").setup({
 			"rachartier/tiny-inline-diagnostic.nvim",
 			-- event = "VeryLazy", -- Or `LspAttach`
 			event = "LspAttach", -- Or `LspAttach`
-			priority = 1000, -- needs to be loaded in first
+			priority = 1000,  -- needs to be loaded in first
 			config = function()
 				vim.diagnostic.config({ virtual_text = false })
 				require("tiny-inline-diagnostic").setup({
@@ -252,10 +252,10 @@ require("lazy").setup({
 				}
 				local installed = require("nvim-treesitter.config").get_installed()
 				local to_install = vim.iter(ensure_installed)
-					:filter(function(parser)
-						return not vim.tbl_contains(installed, parser)
-					end)
-					:totable()
+						:filter(function(parser)
+							return not vim.tbl_contains(installed, parser)
+						end)
+						:totable()
 				if #to_install > 0 then
 					require("nvim-treesitter").install(to_install)
 				end
@@ -263,7 +263,7 @@ require("lazy").setup({
 				-- enable treesitter highlighting + indentation (replaces `highlight`/`indent` config)
 				vim.api.nvim_create_autocmd("FileType", {
 					callback = function()
-						pcall(vim.treesitter.start) -- highlighting + disable regex syntax
+						pcall(vim.treesitter.start)                                 -- highlighting + disable regex syntax
 						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation
 					end,
 				})
@@ -325,7 +325,7 @@ require("lazy").setup({
 							bufferline.style_preset.no_bold,
 						},
 						max_name_length = 24, -- default 18
-						tab_size = 24, -- default 18
+						tab_size = 24,  -- default 18
 						color_icons = false, -- whether or not to add the filetype icon highlights
 						show_buffer_icons = false,
 						show_buffer_close_icons = false,
@@ -345,15 +345,50 @@ require("lazy").setup({
 			end,
 		},
 		{
+			"SmiteshP/nvim-navic",
+			dependencies = {
+				"neovim/nvim-lspconfig",
+			},
+			lazy = true,
+			init = function()
+				-- Attach navic to LSP clients when they connect.
+				vim.api.nvim_create_autocmd("LspAttach", {
+					callback = function(event)
+						local client = vim.lsp.get_client_by_id(event.data.client_id)
+						-- note: navic only works with servers that provide documentSymbol
+						if client and client:supports_method("textDocument/documentSymbol") then
+							require("nvim-navic").attach(client, event.buf)
+						end
+					end,
+				})
+			end,
+		},
+
+		{
 			"nvim-lualine/lualine.nvim",
+			dependencies = {
+				"SmiteshP/nvim-navic",
+			},
 			config = function()
 				-- display the project root dir name
 				local project_root = {
 					function()
 						return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
 					end,
-					-- cond = hide_in_width,
 					separator = "»",
+				}
+
+				-- breadcrumb component using navic
+				local navic = {
+					function()
+						local navic_ok, navic = pcall(require, "nvim-navic")
+						if navic_ok and navic.is_available() then
+							return navic.get_location()
+						end
+						return ""
+					end,
+					color = { fg = "#888888" },   -- dim the breadcrumbs
+					separator = "",
 				}
 
 				require("lualine").setup({
@@ -366,12 +401,15 @@ require("lazy").setup({
 						lualine_c = {
 							project_root,
 							{ "filename", path = 1 },
+							navic,       -- breadcrumbs appear after filename
 						},
 						lualine_x = { "filetype" },
 					},
 				})
 			end,
 		},
+
+
 		{
 			"lewis6991/gitsigns.nvim",
 			config = function()
@@ -424,18 +462,6 @@ require("lazy").setup({
 				words = { enabled = true },
 			},
 		},
-		{
-			"utilyre/barbecue.nvim",
-			name = "barbecue",
-			version = "*",
-			dependencies = {
-				"SmiteshP/nvim-navic",
-				"nvim-tree/nvim-web-devicons", -- optional dependency
-			},
-			opts = {
-				-- configurations go here
-			},
-		},
 
 		-- ### LSP Related ### --
 		{
@@ -452,6 +478,7 @@ require("lazy").setup({
 						"lua_ls",
 						"ts_ls",
 						"jsonls",
+						"eslint",
 					},
 					-- automatic_enable = true is the default in v2. we're gonna enable manually in lspconfig instead.
 					automatic_enable = false,
@@ -492,41 +519,18 @@ require("lazy").setup({
 					},
 				})
 
+				vim.lsp.config("eslint", {})
+
 				-- lua_ls uses default config (no custom settings needed).
+
+				-- TODO: do i want to vim.lsp.config("sylua", ...) here?
 
 				-- explicitly enable all lsp servers here, after config is set (rather than relying on mason's automatic_enable)
 				vim.lsp.enable({
 					"lua_ls",
 					"ts_ls",
 					"jsonls",
-				})
-			end,
-		},
-		{
-			"nvimtools/none-ls.nvim",
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				"nvimtools/none-ls-extras.nvim",
-			},
-			config = function()
-				local null_ls = require("null-ls")
-				null_ls.setup({
-					sources = {
-						-- linters/formatters:
-						null_ls.builtins.formatting.stylua,
-						require("none-ls.diagnostics.eslint"),
-						require("none-ls.formatting.eslint"),
-						require("none-ls.code_actions.eslint"),
-					},
-				})
-			end,
-		},
-		{
-			"jay-babu/mason-null-ls.nvim",
-			config = function()
-				require("mason-null-ls").setup({
-					ensure_installed = nil,
-					automatic_installation = true,
+					"eslint",
 				})
 			end,
 		},
