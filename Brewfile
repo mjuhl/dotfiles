@@ -4,8 +4,8 @@ tap "homebrew/cask-fonts"
 # tap "oven-sh/bun"
 
 
-brew "coreutils"
-brew "openssl@1.1"
+#brew "coreutils"
+#brew "openssl@1.1"
 brew "curl"
 brew "git"
 brew "mas"
@@ -20,19 +20,19 @@ cask "font-sauce-code-pro-nerd-font"
 brew "zsh"
 brew "less"
 brew "pure" # nice & clean zsh prompt
-brew "rust"
-brew "python@3.11"
-brew "frum" # fast ruby version manager
+#brew "rust"
+#brew "python@3.11"
+#brew "frum" # fast ruby version manager
 brew "neovim"
 brew "lazygit" # nice git tui, integrates with neovimm
 brew "gh" # github cli
 brew "git-delta" # syntax highlighting pager for git, diff, grep output 
 brew "unar"
-brew "nvm" # FIXME: don't install nvm with brew, it causes problems
-brew "oven-sh/bun/bun"
+#brew "nvm" # FIXME: don't install nvm with brew, it causes problems
+#brew "oven-sh/bun/bun"
 brew "lsd" # LSDeluxe - like colorls but no messing with ruby
 brew "tree" # lsd does this pretty well, maybe tree isn't needed
-brew "yazi" # Blazing fast terminal file manager
+#brew "yazi" # Blazing fast terminal file manager
 brew "fzy" # fast, simple fuzzy text selector 
 brew "fzf" # general-purpose command-line fuzzy finder
 brew "fd" # find files
@@ -52,7 +52,7 @@ brew "eslint_d"
 brew "ripgrep"
 # brew "httpie" # command-line http client
 brew "terminal-notifier"
-brew "hyperfine" # command-line benchmarking tool
+#brew "hyperfine" # command-line benchmarking tool
 # brew "lima"
 # brew "colima"
 # brew "orbstack" # containers and VMs
@@ -64,7 +64,7 @@ brew "cmatrix" # obvious importance
 brew "tmux"
 
 cask "nikitabobo/tap/aerospace"
-cask "iterm2"
+#cask "iterm2"
 cask "ghostty"
 cask "karabiner-elements" # keyboard customizer
 cask "shottr" # mac screenshot tool
@@ -72,7 +72,7 @@ cask "rapidapi" # like postman but mac native
 cask "steermouse"
 cask "alfred"
 cask "caffeine"
-cask "bartender"
+#cask "bartender"
 cask "rectangle"
 # cask "soundsource"
 cask "appcleaner"
@@ -84,7 +84,7 @@ cask "appcleaner"
 # brew "stats"
 # cask "menubar-stats"
 
-cask "spotify"
+#cask "spotify"
 cask "the-unarchiver"
 # cask "slack"
 
