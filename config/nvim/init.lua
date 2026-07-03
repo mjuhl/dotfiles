@@ -29,6 +29,13 @@ vim.opt.listchars = { tab = "⇀ ", trail = "·", nbsp = "␣", space = "·" }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+
+-- disable unused providers (silences healthcheck noise)
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 -- ### lazy.nvim ### --
 
 -- Bootstrap lazy.nvim
@@ -94,15 +101,14 @@ require("lazy").setup({
 		{
 			"mcncl/alabaster.nvim",
 			lazy = false,
-			proiority = 1000,
 			priority = 1000,
-			config = function ()
+			config = function()
 				require("alabaster").setup({
 					style = "dark",
 					transparent = true,
 				})
 				vim.cmd.colorscheme("alabaster")
-			end
+			end,
 		},
 		--------------------------------------------------------
 		{
@@ -114,7 +120,7 @@ require("lazy").setup({
 			config = function(_, opts)
 				local goUp = require("go-up")
 				goUp.setup(opts)
-			end
+			end,
 		},
 		{
 			"christoomey/vim-tmux-navigator",
@@ -182,14 +188,14 @@ require("lazy").setup({
 		{
 			"nvim-telescope/telescope.nvim",
 			-- make sure to install ripgrep and (optionally) fd
-			tag = "0.1.8",
+			tag = "v0.2.1",
 			dependencies = {
 				{ "nvim-lua/plenary.nvim" },
 				{
 					"nvim-telescope/telescope-fzf-native.nvim",
 					build = "make",
 					cond = function()
-						return vim.fn.executable "make" == 1
+						return vim.fn.executable("make") == 1
 					end,
 				},
 				{ "nvim-telescope/telescope-ui-select.nvim" },
@@ -227,24 +233,39 @@ require("lazy").setup({
 		{
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
-			config = function()
-				local configs = require("nvim-treesitter.configs")
-				configs.setup({
-					ensure_installed = {
-						"lua",
-						"javascript",
-						"typescript",
-						"html",
-						"css",
-						"json",
-						"yaml",
-						"markdown",
-						"markdown_inline",
-					},
-					sync_install = false,
-					auto_install = true,
-					highlight = { enable = true },
-					indent = { enable = true },
+			lazy = false,
+			init = function()
+				-- ensure these parsers are installed (replaces `ensure_installed`)
+				local ensure_installed = {
+					"lua",
+					"javascript",
+					"typescript",
+					"html",
+					"css",
+					"json",
+					"tmux",
+					"yaml",
+					"markdown",
+					"markdown_inline",
+					"regex",
+					"bash",
+				}
+				local installed = require("nvim-treesitter.config").get_installed()
+				local to_install = vim.iter(ensure_installed)
+					:filter(function(parser)
+						return not vim.tbl_contains(installed, parser)
+					end)
+					:totable()
+				if #to_install > 0 then
+					require("nvim-treesitter").install(to_install)
+				end
+
+				-- enable treesitter highlighting + indentation (replaces `highlight`/`indent` config)
+				vim.api.nvim_create_autocmd("FileType", {
+					callback = function()
+						pcall(vim.treesitter.start) -- highlighting + disable regex syntax
+						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation
+					end,
 				})
 			end,
 		},
@@ -295,7 +316,7 @@ require("lazy").setup({
 							bg = {
 								attribute = "background",
 								highlight = "Pmenu",
-							}
+							},
 						},
 					},
 					options = {
@@ -308,7 +329,7 @@ require("lazy").setup({
 						color_icons = false, -- whether or not to add the filetype icon highlights
 						show_buffer_icons = false,
 						show_buffer_close_icons = false,
-						separator_style = {" "," "},
+						separator_style = { " ", " " },
 
 						-- offsets = {
 						-- 	{
@@ -331,7 +352,7 @@ require("lazy").setup({
 					function()
 						return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
 					end,
-					cond = hide_in_width,
+					-- cond = hide_in_width,
 					separator = "»",
 				}
 
@@ -368,6 +389,9 @@ require("lazy").setup({
 		{
 			"folke/noice.nvim",
 			event = "VeryLazy",
+			dependencies = {
+				"hrsh7th/nvim-cmp", -- so Noice can hook cmp docs
+			},
 			config = function()
 				require("noice").setup({})
 			end,
@@ -424,21 +448,27 @@ require("lazy").setup({
 			"williamboman/mason-lspconfig.nvim",
 			config = function()
 				require("mason-lspconfig").setup({
-					-- remember to "setup" each language server in nvim-lspconfig below
-					ensure_installed = { "lua_ls", "ts_ls" },
+					ensure_installed = {
+						"lua_ls",
+						"ts_ls",
+					},
+					-- automatic_enable = true is the default in v2. we're gonna enable manually in lspconfig instead.
+					automatic_enable = false,
 				})
 			end,
 		},
 		{
 			"neovim/nvim-lspconfig",
 			config = function()
-				-- setup lang servers installed with mason/mason-lspconfig
-				local lspconfig = require("lspconfig")
-				lspconfig.lua_ls.setup({})
-				lspconfig.ts_ls.setup({
+				-- Define custom settings for ts_ls (the typescript language server).
+				-- vim.lsp.config() customizes the config; it does NOT start the server.
+				-- mason-lspconfig's automatic_enable will call vim.lsp.enable('ts_ls')
+				-- for you, which activates it for its filetypes.
+				vim.lsp.config("ts_ls", {
 					settings = {
 						diagnostics = {
-							-- remove obnoxious and usless suggestions from the typescript language server
+							-- remove obnoxious and useless suggestions from the typescript
+							-- language server
 							-- see https://github.com/microsoft/TypeScript/blob/v2.9.1/src/compiler/diagnosticMessages.json
 							ignoredCodes = {
 								80001, -- "File is a CommonJS module; it may be converted to an ES6 module."
@@ -447,6 +477,14 @@ require("lazy").setup({
 							},
 						},
 					},
+				})
+
+				-- lua_ls uses default config (no custom settings needed).
+
+				-- explicitly enable all lsp servers here, after config is set (rather than relying on mason's automatic_enable)
+				vim.lsp.enable({
+					"lua_ls",
+					"ts_ls",
 				})
 			end,
 		},
@@ -501,7 +539,7 @@ require("lazy").setup({
 			version = "v2.*",
 
 			-- see: https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#transformations
-			-- build = see: "make install_jsregexp",
+			build = "make install_jsregexp",
 		},
 		{
 			"hrsh7th/nvim-cmp",
@@ -585,7 +623,7 @@ require("lazy").setup({
 		-- 		})
 		-- 	end,
 		-- },
-		-- 
+		--
 		-- {
 		-- 	"CopilotC-Nvim/CopilotChat.nvim",
 		-- 	dependencies = {
@@ -608,6 +646,9 @@ require("lazy").setup({
 	-- install = { colorscheme = { "vesper" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
+	rocks = {
+		enabled = false,
+	}
 })
 
 -- ### AUTO CMD ### --
@@ -687,10 +728,18 @@ vim.keymap.set("n", "<leader>hl", function()
 	harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = "Harpoon: show list" })
 
-vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end, { desc = "Harpoon: file position 1"})
-vim.keymap.set("n", "<leader>h2", function() harpoon:list():select(2) end, { desc = "Harpoon: file position 2"})
-vim.keymap.set("n", "<leader>h3", function() harpoon:list():select(3) end, { desc = "Harpoon: file position 3"})
-vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end, { desc = "Harpoon: file position 4"})
+vim.keymap.set("n", "<leader>h1", function()
+	harpoon:list():select(1)
+end, { desc = "Harpoon: file position 1" })
+vim.keymap.set("n", "<leader>h2", function()
+	harpoon:list():select(2)
+end, { desc = "Harpoon: file position 2" })
+vim.keymap.set("n", "<leader>h3", function()
+	harpoon:list():select(3)
+end, { desc = "Harpoon: file position 3" })
+vim.keymap.set("n", "<leader>h4", function()
+	harpoon:list():select(4)
+end, { desc = "Harpoon: file position 4" })
 -- vim.keymap.set("n", "<leader><C-h>", function() harpoon:list():replace_at(1) end)
 -- vim.keymap.set("n", "<leader><C-t>", function() harpoon:list():replace_at(2) end)
 -- vim.keymap.set("n", "<leader><C-n>", function() harpoon:list():replace_at(3) end)
@@ -714,7 +763,9 @@ vim.keymap.set("n", "<leader>sl", telescope_builtin.resume, { desc = "[s]earch: 
 vim.keymap.set("n", "<leader>sm", ":Noice pick<CR>", { desc = "[s]earch editor [m]essages" })
 
 -- neo-tree/snacks explorer
-vim.keymap.set("n", "<leader>e", function () Snacks.explorer.open({hidden=true}) end, { desc = "Show file explorer" })
+vim.keymap.set("n", "<leader>e", function()
+	Snacks.explorer.open({ hidden = true })
+end, { desc = "Show file explorer" })
 
 -- lsp
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "[g]o to [d]efinition" })
@@ -726,7 +777,6 @@ vim.keymap.set("v", "<leader>fs", function()
 		range = { ["start"] = vim.api.nvim_buf_get_mark(0, "<"), ["end"] = vim.api.nvim_buf_get_mark(0, ">") },
 	})
 end, { desc = "[f]ormat [s]election" })
-
 
 -- terminal
 -- FIXME: this is not working in tmux

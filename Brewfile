@@ -24,6 +24,7 @@ brew "pure" # nice & clean zsh prompt
 #brew "python@3.11"
 #brew "frum" # fast ruby version manager
 brew "neovim"
+brew "tree-sitter-cli" # neovim treesitter
 brew "lazygit" # nice git tui, integrates with neovimm
 brew "gh" # github cli
 brew "git-delta" # syntax highlighting pager for git, diff, grep output 
