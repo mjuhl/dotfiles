@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
 
 fpath+=("$(brew --prefix)/share/zsh/site-functions")
 autoload -U promptinit; promptinit
@@ -83,7 +83,7 @@ plugins=(
 	# zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -114,12 +114,14 @@ export EDITOR='nvim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias zshrc="nvim ~/.zshrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias ls="lsd -lA" # remap ls to LSDeluxe (and use long opt by default)
+# alias ohmyzsh="nvim ~/.oh-my-zsh"
+# alias ls="lsd -lA" # remap ls to LSDeluxe (and use long opt by default)
 alias gg="lazygit"
 alias reload="source ~/.zshrc && exec /bin/zsh"
 alias npmg="npm list -g --depth 0" # show globally installed packages
 alias trs="tmux rename-session"
+alias gst="git status"
+alias ll="ls -al"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -136,13 +138,14 @@ source <(fzf --zsh)
 export PATH=/Users/mjuhl/.local/bin:$PATH
 
 # bun completions
-[ -s "/Users/mjuhl/.bun/_bun" ] && source "/Users/mjuhl/.bun/_bun"
+# [ -s "/Users/mjuhl/.bun/_bun" ] && source "/Users/mjuhl/.bun/_bun"
 
 # bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
+
