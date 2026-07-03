@@ -451,6 +451,7 @@ require("lazy").setup({
 					ensure_installed = {
 						"lua_ls",
 						"ts_ls",
+						"jsonls",
 					},
 					-- automatic_enable = true is the default in v2. we're gonna enable manually in lspconfig instead.
 					automatic_enable = false,
@@ -459,6 +460,9 @@ require("lazy").setup({
 		},
 		{
 			"neovim/nvim-lspconfig",
+			dependencies = {
+				"b0o/SchemaStore.nvim" -- provides require("schemastore").json.schemas()
+			},
 			config = function()
 				-- Define custom settings for ts_ls (the typescript language server).
 				-- vim.lsp.config() customizes the config; it does NOT start the server.
@@ -479,12 +483,22 @@ require("lazy").setup({
 					},
 				})
 
+				vim.lsp.config("jsonls", {
+					settings = {
+						json = {
+							schemas = require("schemastore").json.schemas(),
+							validate = { enable = true },
+						},
+					},
+				})
+
 				-- lua_ls uses default config (no custom settings needed).
 
 				-- explicitly enable all lsp servers here, after config is set (rather than relying on mason's automatic_enable)
 				vim.lsp.enable({
 					"lua_ls",
 					"ts_ls",
+					"jsonls",
 				})
 			end,
 		},
