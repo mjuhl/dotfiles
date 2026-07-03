@@ -87,10 +87,24 @@ require("lazy").setup({
 		-- 		vim.cmd("colorscheme kanagawa-dragon")
 		-- 	end,
 		-- },
+		-- {
+		-- 	"Koalhack/darcubox-nvim",
+		-- 	config = function() vim.cmd("colorscheme darcubox") end
+		-- },
 		{
-			"Koalhack/darcubox-nvim",
-			config = function() vim.cmd("colorscheme darcubox") end
+			"mcncl/alabaster.nvim",
+			lazy = false,
+			proiority = 1000,
+			priority = 1000,
+			config = function ()
+				require("alabaster").setup({
+					style = "dark",
+					transparent = true,
+				})
+				vim.cmd.colorscheme("alabaster")
+			end
 		},
+		--------------------------------------------------------
 		{
 			"folke/which-key.nvim",
 		},
@@ -550,42 +564,42 @@ require("lazy").setup({
 		},
 		-- end of completion stuff
 		-- copilot stuff:
-		{
-			"zbirenbaum/copilot.lua",
-			cmd = "Copilot",
-			build = ":Copilot auth",
-			event = "InsertEnter",
-			config = function()
-				require("copilot").setup({
-					suggestion = {
-						enabled = true,
-						auto_trigger = true,
-						keymap = {
-							accept = "<C-l>",
-							next = "<M-]>",
-							prev = "<M-[>",
-							dismiss = "<C-]>",
-						},
-					},
-					-- panel = { enabled = false },
-				})
-			end,
-		},
-		
-		{
-			"CopilotC-Nvim/CopilotChat.nvim",
-			dependencies = {
-				"zbirenbaum/copilot.lua",
-				"nvim-lua/plenary.nvim",
-			},
-			opts = {
-				model = "gpt-3.5-turbo", -- safest fallback
-				position = "right", -- position of the chat window
-			},
-			keys = {
-				{ "<leader>cc", "<cmd>CopilotChatToggle<cr>", desc = "Toggle Copilot Chat" },
-			},
-		},
+		-- {
+		-- 	"zbirenbaum/copilot.lua",
+		-- 	cmd = "Copilot",
+		-- 	build = ":Copilot auth",
+		-- 	event = "InsertEnter",
+		-- 	config = function()
+		-- 		require("copilot").setup({
+		-- 			suggestion = {
+		-- 				enabled = true,
+		-- 				auto_trigger = true,
+		-- 				keymap = {
+		-- 					accept = "<C-l>",
+		-- 					next = "<M-]>",
+		-- 					prev = "<M-[>",
+		-- 					dismiss = "<C-]>",
+		-- 				},
+		-- 			},
+		-- 			-- panel = { enabled = false },
+		-- 		})
+		-- 	end,
+		-- },
+		-- 
+		-- {
+		-- 	"CopilotC-Nvim/CopilotChat.nvim",
+		-- 	dependencies = {
+		-- 		"zbirenbaum/copilot.lua",
+		-- 		"nvim-lua/plenary.nvim",
+		-- 	},
+		-- 	opts = {
+		-- 		model = "gpt-3.5-turbo", -- safest fallback
+		-- 		position = "right", -- position of the chat window
+		-- 	},
+		-- 	keys = {
+		-- 		{ "<leader>cc", "<cmd>CopilotChatToggle<cr>", desc = "Toggle Copilot Chat" },
+		-- 	},
+		-- },
 		-- end of copilot stuff
 	},
 	-- Configure any other settings here. See the documentation for more details.
