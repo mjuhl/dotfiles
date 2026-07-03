@@ -387,7 +387,7 @@ require("lazy").setup({
 						end
 						return ""
 					end,
-					color = { fg = "#888888" },   -- dim the breadcrumbs
+					color = { fg = "#888888" }, -- dim the breadcrumbs
 					separator = "",
 				}
 
@@ -401,7 +401,7 @@ require("lazy").setup({
 						lualine_c = {
 							project_root,
 							{ "filename", path = 1 },
-							navic,       -- breadcrumbs appear after filename
+							navic, -- breadcrumbs appear after filename
 						},
 						lualine_x = { "filetype" },
 					},
