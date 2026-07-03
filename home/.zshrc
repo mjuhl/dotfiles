@@ -129,7 +129,7 @@ export NVM_DIR="$HOME/.nvm"
 source <(fzf --zsh)
 
 # enable frum (fast ruby version manager)
-eval "$(frum init)"
+# eval "$(frum init)"
 
 # source /Users/mjuhl/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -145,3 +145,4 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
