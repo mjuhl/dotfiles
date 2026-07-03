@@ -3,9 +3,10 @@
 	email = matt@juhl.me
 [core]
 	excludesfile = ~/.gitignore_global
-	editor = /usr/bin/nvim
+	editor = /opt/homebrew/bin/nvim
 	ignorecase = false
 	pager = delta
+	autocrlf = false
 [interactive]
     diffFilter = delta --color-only
 [delta]
@@ -19,6 +20,7 @@
 	ui = true
 [push]
 	default = simple
+	autoSetupRemote = true
 [pull]
 	rebase = true
 
