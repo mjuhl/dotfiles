@@ -230,6 +230,14 @@ require("lazy").setup({
 		{
 			"akinsho/bufferline.nvim",
 			version = "*",
+			{
+				"danymat/neogen",
+				dependencies = "nvim-treesitter/nvim-treesitter",
+				config = true,
+				keys = {
+					{ "<leader>jd", ":Neogen<CR>", desc = "Generate JSDoc annotation" },
+				},
+			},
 			config = function()
 				local bufferline = require("bufferline")
 				bufferline.setup({
