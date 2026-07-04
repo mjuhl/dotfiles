@@ -21,10 +21,8 @@ vim.opt.smartcase = true
 vim.opt.inccommand = "split"
 
 -- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = "⇀ ", trail = "·", nbsp = "␣", space = "·" }
+vim.opt.listchars = { tab = "⇀ ", trail = "·", nbsp = "␣" }
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -34,8 +32,6 @@ vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
-
-vim.lsp.inlay_hint.enable()
 
 -- ### lazy.nvim ### --
 
@@ -60,45 +56,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	spec = {
 		-- COLOR SCHEMES --
-		-------------------
-		-- {
-		-- 	"catppuccin/nvim",
-		-- 	name = "catppuccin",
-		-- 	priority = 1000,
-		-- 	config = function()
-		-- 		vim.cmd.colorscheme("catppuccin-mocha")
-		-- 	end,
-		-- },
-		-- {
-		-- 	"datsfilipe/vesper.nvim",
-		-- 	config = function()
-		-- 		require("vesper").setup({
-		-- 			transparent = true,
-		-- 			italics = {
-		-- 				comments = false, -- Boolean: Italicizes comments
-		-- 				keywords = false, -- Boolean: Italicizes keywords
-		-- 				functions = false, -- Boolean: Italicizes functions
-		-- 				strings = false, -- Boolean: Italicizes strings
-		-- 				variables = false, -- Boolean: Italicizes variables
-		-- 			},
-		-- 		})
-		-- 		vim.cmd.colorscheme("vesper")
-		-- 	end,
-		-- },
-		-- {
-		-- 	"rebelot/kanagawa.nvim",
-		-- 	config = function()
-		-- 		require("kanagawa").setup({
-		-- 			theme = "dragon",
-		-- 			transparent = true,
-		-- 		})
-		-- 		vim.cmd("colorscheme kanagawa-dragon")
-		-- 	end,
-		-- },
-		-- {
-		-- 	"Koalhack/darcubox-nvim",
-		-- 	config = function() vim.cmd("colorscheme darcubox") end
-		-- },
 		{
 			"mcncl/alabaster.nvim",
 			lazy = false,
@@ -147,32 +104,22 @@ require("lazy").setup({
 			event = "BufRead",
 			config = function()
 				require("numb").setup({
-					show_numbers = true, -- Enable 'number' for the window while peeking
-					show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+					show_numbers = true,
+					show_cursorline = true,
 				})
 			end,
 		},
 		{
 			"rachartier/tiny-inline-diagnostic.nvim",
-			-- event = "VeryLazy", -- Or `LspAttach`
-			event = "LspAttach", -- Or `LspAttach`
-			priority = 1000,  -- needs to be loaded in first
+			event = "LspAttach",
+			priority = 1000,
 			config = function()
 				vim.diagnostic.config({ virtual_text = false })
 				require("tiny-inline-diagnostic").setup({
 					preset = "simple",
 					options = {
-						-- Show the source of the diagnostic.
 						show_source = true,
-
-						-- If multiple diagnostics are under the cursor, display all of them.
 						multiple_diag_under_cursor = true,
-
-						-- multilines = {
-						-- 	enabled = true,
-						-- 	always_show = false,
-						-- },
-
 						break_line = {
 							enabled = true,
 							after = 40,
@@ -188,7 +135,6 @@ require("lazy").setup({
 		},
 		{
 			"nvim-telescope/telescope.nvim",
-			-- make sure to install ripgrep and (optionally) fd
 			tag = "v0.2.1",
 			dependencies = {
 				{ "nvim-lua/plenary.nvim" },
@@ -236,7 +182,6 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			lazy = false,
 			init = function()
-				-- ensure these parsers are installed (replaces `ensure_installed`)
 				local ensure_installed = {
 					"lua",
 					"javascript",
@@ -253,19 +198,18 @@ require("lazy").setup({
 				}
 				local installed = require("nvim-treesitter.config").get_installed()
 				local to_install = vim.iter(ensure_installed)
-						:filter(function(parser)
-							return not vim.tbl_contains(installed, parser)
-						end)
-						:totable()
+					:filter(function(parser)
+						return not vim.tbl_contains(installed, parser)
+					end)
+					:totable()
 				if #to_install > 0 then
 					require("nvim-treesitter").install(to_install)
 				end
 
-				-- enable treesitter highlighting + indentation (replaces `highlight`/`indent` config)
 				vim.api.nvim_create_autocmd("FileType", {
 					callback = function()
-						pcall(vim.treesitter.start)                                 -- highlighting + disable regex syntax
-						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation
+						pcall(vim.treesitter.start)
+						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 					end,
 				})
 			end,
@@ -281,43 +225,15 @@ require("lazy").setup({
 			},
 			opts = { signs = false },
 		},
-		-- {
-		-- 	"nvim-neo-tree/neo-tree.nvim",
-		-- 	branch = "v3.x",
-		-- 	dependencies = {
-		-- 		"nvim-lua/plenary.nvim",
-		-- 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-		-- 		"MunifTanjim/nui.nvim",
-		-- 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-		-- 	},
-		-- 	config = function()
-		-- 		require("neo-tree").setup({
-		-- 			filesystem = {
-		-- 				filtered_items = {
-		-- 					visible = true,
-		-- 					hide_dotfiles = false,
-		-- 					hide_gitignored = true,
-		-- 				},
-		-- 			},
-		-- 		})
-		-- 	end,
-		-- },
 		{
 			"akinsho/bufferline.nvim",
 			version = "*",
-			-- dependencies = "nvim-tree/nvim-web-devicons",
 			config = function()
 				local bufferline = require("bufferline")
 				bufferline.setup({
-					-- highlights = require("catppuccin.groups.integrations.bufferline").get(),
-					-- highlights = require("vesper").bufferline.highlights,
-					-- TODO: anything required for highlights from kanagawa theme?
 					highlights = {
 						fill = {
-							bg = {
-								attribute = "background",
-								highlight = "Pmenu",
-							},
+							bg = "#0E1415",
 						},
 					},
 					options = {
@@ -325,22 +241,12 @@ require("lazy").setup({
 							bufferline.style_preset.minimal,
 							bufferline.style_preset.no_bold,
 						},
-						max_name_length = 24, -- default 18
-						tab_size = 24,  -- default 18
-						color_icons = false, -- whether or not to add the filetype icon highlights
+						max_name_length = 24,
+						tab_size = 24,
+						color_icons = false,
 						show_buffer_icons = false,
 						show_buffer_close_icons = false,
 						separator_style = { " ", " " },
-
-						-- offsets = {
-						-- 	{
-						-- 		filetype = "neo-tree",
-						-- 		-- text = "File Tree",
-						-- 		highlight = "Directory",
-						-- 		separator = true,
-						-- 		text_align = "left",
-						-- 	},
-						-- },
 					},
 				})
 			end,
@@ -352,11 +258,9 @@ require("lazy").setup({
 			},
 			lazy = true,
 			init = function()
-				-- Attach navic to LSP clients when they connect.
 				vim.api.nvim_create_autocmd("LspAttach", {
 					callback = function(event)
 						local client = vim.lsp.get_client_by_id(event.data.client_id)
-						-- note: navic only works with servers that provide documentSymbol
 						if client and client:supports_method("textDocument/documentSymbol") then
 							require("nvim-navic").attach(client, event.buf)
 						end
@@ -364,14 +268,12 @@ require("lazy").setup({
 				})
 			end,
 		},
-
 		{
 			"nvim-lualine/lualine.nvim",
 			dependencies = {
 				"SmiteshP/nvim-navic",
 			},
 			config = function()
-				-- display the project root dir name
 				local project_root = {
 					function()
 						return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
@@ -379,7 +281,6 @@ require("lazy").setup({
 					separator = "»",
 				}
 
-				-- breadcrumb component using navic
 				local navic = {
 					function()
 						local navic_ok, navic = pcall(require, "nvim-navic")
@@ -388,7 +289,7 @@ require("lazy").setup({
 						end
 						return ""
 					end,
-					color = { fg = "#888888" }, -- dim the breadcrumbs
+					color = { fg = "#888888" },
 					separator = "",
 				}
 
@@ -402,15 +303,13 @@ require("lazy").setup({
 						lualine_c = {
 							project_root,
 							{ "filename", path = 1 },
-							navic, -- breadcrumbs appear after filename
+							navic,
 						},
 						lualine_x = { "filetype" },
 					},
 				})
 			end,
 		},
-
-
 		{
 			"lewis6991/gitsigns.nvim",
 			config = function()
@@ -429,7 +328,7 @@ require("lazy").setup({
 			"folke/noice.nvim",
 			event = "VeryLazy",
 			dependencies = {
-				"hrsh7th/nvim-cmp", -- so Noice can hook cmp docs
+				"hrsh7th/nvim-cmp",
 			},
 			config = function()
 				require("noice").setup({})
@@ -442,28 +341,22 @@ require("lazy").setup({
 			},
 			priority = 1000,
 			lazy = false,
-			---@type snacks.Config
 			opts = {
 				dashboard = { enabled = true },
-
 				explorer = {},
-
 				git = { enabled = true },
 				gitbrowse = { enabled = true },
 				lazygit = { enabled = true },
-
 				indent = {
 					enabled = true,
 					animate = { enabled = false },
 				},
-
 				input = { enabled = true },
-				notifier = { enabled = true, timeout = 5000 },
-				scope = { enabled = true }, -- use "]" and "[" mappings to jump around based on scope
+				notifier = { enabled = false, timeout = 5000 },
+				scope = { enabled = true },
 				words = { enabled = true },
 			},
 		},
-
 		-- ### LSP Related ### --
 		{
 			"williamboman/mason.nvim",
@@ -484,7 +377,6 @@ require("lazy").setup({
 						"yamlls",
 						"stylua",
 					},
-					-- automatic_enable = true is the default in v2. we're gonna enable manually in lspconfig instead.
 					automatic_enable = false,
 				})
 			end,
@@ -492,23 +384,16 @@ require("lazy").setup({
 		{
 			"neovim/nvim-lspconfig",
 			dependencies = {
-				"b0o/SchemaStore.nvim" -- provides require("schemastore").json.schemas()
+				"b0o/SchemaStore.nvim",
 			},
 			config = function()
-				-- Define custom settings for ts_ls (the typescript language server).
-				-- vim.lsp.config() customizes the config; it does NOT start the server.
-				-- mason-lspconfig's automatic_enable will call vim.lsp.enable('ts_ls')
-				-- for you, which activates it for its filetypes.
 				vim.lsp.config("ts_ls", {
 					settings = {
 						diagnostics = {
-							-- remove obnoxious and useless suggestions from the typescript
-							-- language server
-							-- see https://github.com/microsoft/TypeScript/blob/v2.9.1/src/compiler/diagnosticMessages.json
 							ignoredCodes = {
-								80001, -- "File is a CommonJS module; it may be converted to an ES6 module."
-								80002, -- "This constructor function may be converted to a class declaration."
-								80005, -- "'require' call may be converted to an import."
+								80001,
+								80002,
+								80005,
 							},
 						},
 						typescript = {
@@ -545,7 +430,7 @@ require("lazy").setup({
 
 				vim.lsp.config("eslint", {
 					settings = {
-						format = true, --use eslint as a formatter
+						format = true,
 					},
 				})
 
@@ -560,11 +445,6 @@ require("lazy").setup({
 					},
 				})
 
-				-- lua_ls uses default config (no custom settings needed).
-
-				-- TODO: do i want to vim.lsp.config("sylua", ...) here?
-
-				-- explicitly enable all lsp servers here, after config is set (rather than relying on mason's automatic_enable)
 				vim.lsp.enable({
 					"lua_ls",
 					"ts_ls",
@@ -573,11 +453,11 @@ require("lazy").setup({
 					"bashls",
 					"yamlls",
 				})
+
 				vim.api.nvim_create_autocmd("LspAttach", {
 					group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
 					callback = function(event)
 						local client = vim.lsp.get_client_by_id(event.data.client_id)
-						local bufnr = event.buf
 						if not client then
 							return
 						end
@@ -592,17 +472,11 @@ require("lazy").setup({
 							client.server_capabilities.documentRangeFormattingProvider = true
 						end
 
-						-- local opts = { buffer = bufnr, noremap = true, silent = true }
-						-- vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
-						-- vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
-						-- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-						-- vim.keymap.set("n", "<leader>fb", vim.lsp.buf.format, opts)
-						-- vim.keymap.set("n", "<leader>fs", vim.lsp.buf.signature_help, opts)
+						vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
 					end,
 				})
 			end,
 		},
-
 		{
 			"echasnovski/mini.pairs",
 			version = false,
@@ -610,7 +484,6 @@ require("lazy").setup({
 				require("mini.pairs").setup()
 			end,
 		},
-
 		-- ### completion ### --
 		{
 			"hrsh7th/cmp-nvim-lsp",
@@ -623,8 +496,6 @@ require("lazy").setup({
 				"rafamadriz/friendly-snippets",
 			},
 			version = "v2.*",
-
-			-- see: https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#transformations
 			build = "make install_jsregexp",
 		},
 		{
@@ -632,6 +503,7 @@ require("lazy").setup({
 			config = function()
 				local luasnip = require("luasnip")
 				local cmp = require("cmp")
+
 				require("luasnip.loaders.from_vscode").lazy_load()
 
 				cmp.setup({
@@ -654,7 +526,6 @@ require("lazy").setup({
 								fallback()
 							end
 						end, { "i", "s" }),
-
 						["<S-Tab>"] = cmp.mapping(function(fallback)
 							if cmp.visible() then
 								cmp.select_prev_item()
@@ -675,66 +546,22 @@ require("lazy").setup({
 							s = cmp.mapping.confirm({ select = true }),
 							c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 						}),
-					}, -- /mapping
+					},
 					sources = cmp.config.sources({
 						{ name = "nvim_lsp" },
 						{ name = "luasnip" },
 						{ name = "nvim_lsp_signature_help" },
 					}, {
 						{ name = "buffer" },
-					}), -- /sources
+					}),
 				})
 			end,
 		},
-		-- end of completion stuff
-		-- copilot stuff:
-		-- {
-		-- 	"zbirenbaum/copilot.lua",
-		-- 	cmd = "Copilot",
-		-- 	build = ":Copilot auth",
-		-- 	event = "InsertEnter",
-		-- 	config = function()
-		-- 		require("copilot").setup({
-		-- 			suggestion = {
-		-- 				enabled = true,
-		-- 				auto_trigger = true,
-		-- 				keymap = {
-		-- 					accept = "<C-l>",
-		-- 					next = "<M-]>",
-		-- 					prev = "<M-[>",
-		-- 					dismiss = "<C-]>",
-		-- 				},
-		-- 			},
-		-- 			-- panel = { enabled = false },
-		-- 		})
-		-- 	end,
-		-- },
-		--
-		-- {
-		-- 	"CopilotC-Nvim/CopilotChat.nvim",
-		-- 	dependencies = {
-		-- 		"zbirenbaum/copilot.lua",
-		-- 		"nvim-lua/plenary.nvim",
-		-- 	},
-		-- 	opts = {
-		-- 		model = "gpt-3.5-turbo", -- safest fallback
-		-- 		position = "right", -- position of the chat window
-		-- 	},
-		-- 	keys = {
-		-- 		{ "<leader>cc", "<cmd>CopilotChatToggle<cr>", desc = "Toggle Copilot Chat" },
-		-- 	},
-		-- },
-		-- end of copilot stuff
 	},
-	-- Configure any other settings here. See the documentation for more details.
-	-- colorscheme that will be used when installing plugins.
-	-- install = { colorscheme = { "catppuccin" } },
-	-- install = { colorscheme = { "vesper" } },
-	-- automatically check for plugin updates
 	checker = { enabled = true },
 	rocks = {
 		enabled = false,
-	}
+	},
 })
 
 -- ### AUTO CMD ### --
@@ -764,12 +591,6 @@ local telescope_builtin = require("telescope.builtin")
 local harpoon = require("harpoon")
 local Snacks = require("snacks")
 
--- Navigate vim panes better
--- vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
--- vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
--- vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
--- vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
-
 -- using shift is just so much work
 vim.keymap.set("n", ";", ":", { nowait = true })
 vim.keymap.set("v", ";", ":", { nowait = true })
@@ -787,8 +608,6 @@ vim.keymap.set("n", "<leader>bd", function()
 end, { desc = "Delete buffer" })
 
 -- switch open buffers using tab key
--- vim.keymap.set("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "next tab" })
--- vim.keymap.set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "previous tab" })
 vim.keymap.set("n", "<tab>", "<cmd>bnext<CR>", { desc = "next buffer" })
 vim.keymap.set("n", "<s-tab>", "<cmd>bprev<CR>", { desc = "previous buffer" })
 
@@ -826,10 +645,6 @@ end, { desc = "Harpoon: file position 3" })
 vim.keymap.set("n", "<leader>h4", function()
 	harpoon:list():select(4)
 end, { desc = "Harpoon: file position 4" })
--- vim.keymap.set("n", "<leader><C-h>", function() harpoon:list():replace_at(1) end)
--- vim.keymap.set("n", "<leader><C-t>", function() harpoon:list():replace_at(2) end)
--- vim.keymap.set("n", "<leader><C-n>", function() harpoon:list():replace_at(3) end)
--- vim.keymap.set("n", "<leader><C-s>", function() harpoon:list():replace_at(4) end)
 
 -- git
 vim.keymap.set("n", "<leader>gg", require("snacks.lazygit").open, { desc = "open lazy git" })
@@ -859,19 +674,6 @@ vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "[g]o to [r]e
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[c]ode [a]ction" })
 vim.keymap.set("n", "<leader>fb", vim.lsp.buf.format, { desc = "[f]ormat [b]uffer" })
 
--- TODO: visual mode format key binding is not working
--- vim.keymap.set("v", "<leader>fs", function()
--- 	vim.lsp.buf.format({ async = true })
--- end, { desc = "[f]ormat [s]election" })
-
--- terminal
--- FIXME: this is not working in tmux
-vim.keymap.set("n", "<c-/>", function()
-	Snacks.terminal()
-end, { desc = "Toggle terminal" })
--- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-vim.keymap.set("t", "<c-/>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-
 -- ### MISC ### --
 
 vim.schedule(function()
@@ -885,3 +687,4 @@ vim.cmd([[
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none
 ]])
+
