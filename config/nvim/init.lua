@@ -13,6 +13,8 @@ vim.opt.undofile = true    -- save undo history
 
 vim.opt.termguicolors = true
 
+vim.opt.guicursor = "n-v-c:block-blinkon0,i-ci-ve:ver25-blinkwait200-blinkon200-blinkoff200"
+
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
