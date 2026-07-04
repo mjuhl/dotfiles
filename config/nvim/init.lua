@@ -480,6 +480,8 @@ require("lazy").setup({
 						"ts_ls",
 						"jsonls",
 						"eslint",
+						"bashls",
+						"yamlls",
 					},
 					-- automatic_enable = true is the default in v2. we're gonna enable manually in lspconfig instead.
 					automatic_enable = false,
@@ -542,6 +544,17 @@ require("lazy").setup({
 
 				vim.lsp.config("eslint", {})
 
+				vim.lsp.config("yamlls", {
+					settings = {
+						yaml = {
+							schemaStore = {
+								enable = true,
+								url = "https://www.schemastore.org/api/json/catalog.json",
+							},
+						},
+					},
+				})
+
 				-- lua_ls uses default config (no custom settings needed).
 
 				-- TODO: do i want to vim.lsp.config("sylua", ...) here?
@@ -552,6 +565,8 @@ require("lazy").setup({
 					"ts_ls",
 					"jsonls",
 					"eslint",
+					"bashls",
+					"yamlls",
 				})
 			end,
 		},
