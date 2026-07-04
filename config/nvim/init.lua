@@ -495,21 +495,6 @@ require("lazy").setup({
 				"b0o/SchemaStore.nvim" -- provides require("schemastore").json.schemas()
 			},
 			config = function()
-				vim.lsp.config("*", {
-					on_attach = function(client, bufnr)
-						if client.name == "ts_ls" then
-							client.server_capabilities.documentFormattingProvider = false
-							client.server_capabilities.documentRangeFormattingProvider = false
-						end
-
-						local opts = { buffer = bufnr, noremap = true, silent = true }
-						vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
-						vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
-						vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-						vim.keymap.set("n", "<leader>fb", vim.lsp.buf.format, opts)
-						vim.keymap.set("n", "<leader>fs", vim.lsp.buf.signature_help, opts)
-					end,
-				})
 				-- Define custom settings for ts_ls (the typescript language server).
 				-- vim.lsp.config() customizes the config; it does NOT start the server.
 				-- mason-lspconfig's automatic_enable will call vim.lsp.enable('ts_ls')
@@ -587,6 +572,33 @@ require("lazy").setup({
 					"eslint",
 					"bashls",
 					"yamlls",
+				})
+				vim.api.nvim_create_autocmd("LspAttach", {
+					group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+					callback = function(event)
+						local client = vim.lsp.get_client_by_id(event.data.client_id)
+						local bufnr = event.buf
+						if not client then
+							return
+						end
+
+						if client.name == "ts_ls" then
+							client.server_capabilities.documentFormattingProvider = false
+							client.server_capabilities.documentRangeFormattingProvider = false
+						end
+
+						if client.name == "eslint" then
+							client.server_capabilities.documentFormattingProvider = true
+							client.server_capabilities.documentRangeFormattingProvider = true
+						end
+
+						-- local opts = { buffer = bufnr, noremap = true, silent = true }
+						-- vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
+						-- vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
+						-- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+						-- vim.keymap.set("n", "<leader>fb", vim.lsp.buf.format, opts)
+						-- vim.keymap.set("n", "<leader>fs", vim.lsp.buf.signature_help, opts)
+					end,
 				})
 			end,
 		},
@@ -846,11 +858,11 @@ vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "[g]o to [d]e
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "[g]o to [r]eferences" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[c]ode [a]ction" })
 vim.keymap.set("n", "<leader>fb", vim.lsp.buf.format, { desc = "[f]ormat [b]uffer" })
-vim.keymap.set("v", "<leader>fs", function()
-	vim.lsp.buf.format({
-		range = { ["start"] = vim.api.nvim_buf_get_mark(0, "<"), ["end"] = vim.api.nvim_buf_get_mark(0, ">") },
-	})
-end, { desc = "[f]ormat [s]election" })
+
+-- TODO: visual mode format key binding is not working
+-- vim.keymap.set("v", "<leader>fs", function()
+-- 	vim.lsp.buf.format({ async = true })
+-- end, { desc = "[f]ormat [s]election" })
 
 -- terminal
 -- FIXME: this is not working in tmux
