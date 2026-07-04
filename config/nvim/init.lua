@@ -406,26 +406,26 @@ require("lazy").setup({
 								80005,
 							},
 						},
-						typescript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-						javascript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
+						-- typescript = {
+						-- 	inlayHints = {
+						-- 		includeInlayParameterNameHints = "all",
+						-- 		includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						-- 		includeInlayFunctionLikeReturnTypeHints = true,
+						-- 		includeInlayVariableTypeHints = false,
+						-- 		includeInlayPropertyDeclarationTypeHints = true,
+						-- 		includeInlayEnumMemberValueHints = true,
+						-- 	},
+						-- },
+						-- javascript = {
+						-- 	inlayHints = {
+						-- 		includeInlayParameterNameHints = "all",
+						-- 		includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						-- 		includeInlayFunctionLikeReturnTypeHints = true,
+						-- 		includeInlayVariableTypeHints = false,
+						-- 		includeInlayPropertyDeclarationTypeHints = true,
+						-- 		includeInlayEnumMemberValueHints = true,
+						-- 	},
+						-- },
 					},
 				})
 
@@ -482,7 +482,7 @@ require("lazy").setup({
 							client.server_capabilities.documentRangeFormattingProvider = true
 						end
 
-						vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+						-- vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
 					end,
 				})
 			end,
