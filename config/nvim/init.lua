@@ -482,6 +482,7 @@ require("lazy").setup({
 						"eslint",
 						"bashls",
 						"yamlls",
+						"stylua",
 					},
 					-- automatic_enable = true is the default in v2. we're gonna enable manually in lspconfig instead.
 					automatic_enable = false,
@@ -494,6 +495,21 @@ require("lazy").setup({
 				"b0o/SchemaStore.nvim" -- provides require("schemastore").json.schemas()
 			},
 			config = function()
+				vim.lsp.config("*", {
+					on_attach = function(client, bufnr)
+						if client.name == "ts_ls" then
+							client.server_capabilities.documentFormattingProvider = false
+							client.server_capabilities.documentRangeFormattingProvider = false
+						end
+
+						local opts = { buffer = bufnr, noremap = true, silent = true }
+						vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
+						vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
+						vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+						vim.keymap.set("n", "<leader>fb", vim.lsp.buf.format, opts)
+						vim.keymap.set("n", "<leader>fs", vim.lsp.buf.signature_help, opts)
+					end,
+				})
 				-- Define custom settings for ts_ls (the typescript language server).
 				-- vim.lsp.config() customizes the config; it does NOT start the server.
 				-- mason-lspconfig's automatic_enable will call vim.lsp.enable('ts_ls')
@@ -542,7 +558,11 @@ require("lazy").setup({
 					},
 				})
 
-				vim.lsp.config("eslint", {})
+				vim.lsp.config("eslint", {
+					settings = {
+						format = true, --use eslint as a formatter
+					},
+				})
 
 				vim.lsp.config("yamlls", {
 					settings = {
