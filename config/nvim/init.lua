@@ -228,16 +228,18 @@ require("lazy").setup({
 			opts = { signs = false },
 		},
 		{
+			"kkoomen/vim-doge",
+			build = function()
+				vim.fn["doge#install"]({ "--headless" })
+			end,
+			config = function()
+				vim.g.doge_enable_mappings = 0
+				vim.keymap.set("n", "<leader>jd", "<Plug>(doge-generate)", { desc = "Generate JSDoc" })
+			end,
+		},
+		{
 			"akinsho/bufferline.nvim",
 			version = "*",
-			{
-				"danymat/neogen",
-				dependencies = "nvim-treesitter/nvim-treesitter",
-				config = true,
-				keys = {
-					{ "<leader>jd", ":Neogen<CR>", desc = "Generate JSDoc annotation" },
-				},
-			},
 			config = function()
 				local bufferline = require("bufferline")
 				bufferline.setup({
