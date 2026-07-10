@@ -19,17 +19,9 @@ antidote load "$HOME/.zsh_plugins.txt"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-export EDITOR='nvim'
+# NOTE: environment variables (EDITOR, LANG, NVM_DIR, ...) live in ~/.zshenv so
+# they apply to non-interactive shells too. Keep this file for interactive
+# config: prompt, plugins, aliases, keybindings, and PATH (see macOS note below).
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -45,7 +37,8 @@ alias trs="tmux rename-session"
 alias gst="git status"
 alias ll="ls -al"
 
-export NVM_DIR="$HOME/.nvm"
+# nvm (NVM_DIR is set in ~/.zshenv). The sourcing stays here so it only runs
+# for interactive shells.
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
