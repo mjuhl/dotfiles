@@ -235,6 +235,13 @@ require("lazy").setup({
 			config = function()
 				vim.g.doge_enable_mappings = 0
 				vim.keymap.set("n", "<leader>jd", "<Plug>(doge-generate)", { desc = "Generate JSDoc" })
+
+				-- Warn if DoGe command isn't available after loading
+				vim.defer_fn(function()
+					if vim.fn.exists(":DogeGenerate") == 0 then
+						vim.notify("vim-doge: :DogeGenerate not available. Run :call doge#install()", vim.log.levels.WARN)
+					end
+				end, 1000)
 			end,
 		},
 		{
