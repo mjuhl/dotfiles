@@ -9,30 +9,10 @@ autoload -Uz compinit && compinit
 autoload -U promptinit; promptinit
 prompt pure
 
-# Plugins: self-contained copies live in ZSH_PLUGIN_DIR and are sourced directly.
-ZSH_PLUGIN_DIR="$HOME/.zsh/plugins"
-
-source "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
-
-# git plugin needs these two helpers (originally from oh-my-zsh's lib/git.zsh).
-function __git_prompt_git() { GIT_OPTIONAL_LOCKS=0 command git "$@" }
-function git_current_branch() {
-	local ref
-	ref=$(__git_prompt_git symbolic-ref --quiet HEAD 2> /dev/null)
-	local ret=$?
-	if [[ $ret != 0 ]]; then
-		[[ $ret == 128 ]] && return  # no git repo.
-		ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) || return
-	fi
-	echo ${ref#refs/heads/}
-}
-source "$ZSH_PLUGIN_DIR/git/git.plugin.zsh"
-
-# als: prints a cheatsheet of your aliases grouped by command
-source "$ZSH_PLUGIN_DIR/aliases/aliases.plugin.zsh"
-
-# bgnotify: desktop notification when a long-running bg command finishes
-source "$ZSH_PLUGIN_DIR/bgnotify/bgnotify.plugin.zsh"
+# Plugins managed by antidote (brew install antidote). Add/remove plugins in
+# ~/.zsh_plugins.txt, then restart zsh (or re-run `antidote load`).
+source "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
+antidote load "$HOME/.zsh_plugins.txt"
 
 # User configuration
 
@@ -87,7 +67,4 @@ export PATH=/Users/mjuhl/.local/bin:$PATH
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
-
-# zsh-syntax-highlighting must be sourced LAST, after everything else.
-source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 

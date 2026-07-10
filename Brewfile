@@ -18,6 +18,7 @@ cask "font-sauce-code-pro-nerd-font"
 # cask "font-blex-mono-nerd-font"
 
 brew "zsh"
+brew "antidote" # zsh plugin manager (see ~/.zsh_plugins.txt)
 brew "less"
 brew "pure" # nice & clean zsh prompt
 #brew "rust"

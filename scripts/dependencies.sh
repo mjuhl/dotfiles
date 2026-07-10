@@ -45,15 +45,9 @@ success "Finished installing Brewfile packages."
 
 
 # === ZSH ===
-# (zsh is installed by homebrew)
-
-info "Setting up zsh ..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-
-# install plugins
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-# TODO: there are probably more that need to be installed?
+# zsh is installed by homebrew. Plugins are managed by antidote (also from the
+# Brewfile) and declared in ~/.zsh_plugins.txt; antidote clones them
+# automatically on the first interactive shell start, so nothing to do here.
 
 success "Successfully set up zsh. Remember to reload."
 

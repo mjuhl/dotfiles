@@ -1,0 +1,18 @@
+# Managed by antidote. Edit this file, then run `antidote load` (or restart zsh).
+
+# Fish-like autosuggestions
+zsh-users/zsh-autosuggestions
+
+# oh-my-zsh git plugin (g*/gco/gst/... aliases). lib/git.zsh provides helpers
+# like git_current_branch that the plugin depends on, so load it first.
+ohmyzsh/ohmyzsh path:lib/git.zsh
+ohmyzsh/ohmyzsh path:plugins/git
+
+# oh-my-zsh aliases plugin (`als` cheatsheet)
+ohmyzsh/ohmyzsh path:plugins/aliases
+
+# oh-my-zsh bgnotify (desktop notification when a long bg command finishes)
+ohmyzsh/ohmyzsh path:plugins/bgnotify
+
+# Syntax highlighting must be loaded LAST.
+zsh-users/zsh-syntax-highlighting
