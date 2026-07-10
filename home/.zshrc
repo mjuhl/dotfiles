@@ -3,8 +3,9 @@
 
 fpath+=("$(brew --prefix)/share/zsh/site-functions")
 
-# Initialize zsh's completion system
-autoload -Uz compinit && compinit
+# Initialize zsh's completion system (-C skips the daily security check on the
+# dump file for faster startup)
+autoload -Uz compinit && compinit -C
 
 autoload -U promptinit; promptinit
 prompt pure
@@ -54,17 +55,19 @@ source <(fzf --zsh)
 # enable frum (fast ruby version manager)
 # eval "$(frum init)"
 
-export PATH=/Users/mjuhl/.local/bin:$PATH
-
 # bun completions
-# [ -s "/Users/mjuhl/.bun/_bun" ] && source "/Users/mjuhl/.bun/_bun"
+# [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 # export BUN_INSTALL="$HOME/.bun"
 # export PATH="$BUN_INSTALL/bin:$PATH"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
-export PATH=$JAVA_HOME/bin:$PATH
+# Java: only set JAVA_HOME if a matching JDK is actually installed
+if _jh="$(/usr/libexec/java_home -v 21 2>/dev/null)"; then
+	export JAVA_HOME="$_jh"
+	export PATH="$JAVA_HOME/bin:$PATH"
+fi
+unset _jh
+
 export PATH="$HOME/.local/bin:$PATH"
 
