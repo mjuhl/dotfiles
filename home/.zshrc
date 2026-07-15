@@ -35,7 +35,7 @@ alias reload="source ~/.zshrc && exec /bin/zsh"
 alias npmg="npm list -g --depth 0" # show globally installed packages
 alias trs="tmux rename-session"
 alias gst="git status"
-alias ll="ls -al"
+alias ll="lsd -al"
 
 # nvm (NVM_DIR is set in ~/.zshenv). The sourcing stays here so it only runs
 # for interactive shells.
