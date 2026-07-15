@@ -10,6 +10,10 @@
 export EDITOR='nvim'
 export LANG='en_US.UTF-8'
 
+# lazygit on macOS defaults to ~/Library/Application Support; point it at the
+# XDG-managed dotfiles config instead.
+export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
+
 # nvm: the directory variable is env, but the (heavy) nvm.sh sourcing stays in
 # .zshrc so it only runs for interactive shells.
 export NVM_DIR="$HOME/.nvm"
